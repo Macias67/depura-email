@@ -39,6 +39,7 @@ public class VistaEditar extends javax.swing.JFrame {
         grupo = new javax.swing.JComboBox();
         buscar = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jLabel1.setText("ID de Correo: ");
@@ -64,6 +65,11 @@ public class VistaEditar extends javax.swing.JFrame {
         habilitado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         habilitado.setSelected(true);
         habilitado.setText("Habilitado");
+        habilitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                habilitadoActionPerformed(evt);
+            }
+        });
         getContentPane().add(habilitado);
         habilitado.setBounds(30, 260, 100, 23);
 
@@ -103,6 +109,14 @@ public class VistaEditar extends javax.swing.JFrame {
         habilitado.setSelected(true);
         this.setVisible(false);
     }//GEN-LAST:event_cancelarActionPerformed
+
+    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
+        if(habilitado.isSelected()){
+            habilitado.setText("Habilitado");
+        }else{
+            habilitado.setText("Inhabilitado");
+        }
+    }//GEN-LAST:event_habilitadoActionPerformed
 
     /**
      * @param args the command line arguments

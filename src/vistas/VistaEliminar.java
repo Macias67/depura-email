@@ -13,6 +13,7 @@ public class VistaEliminar extends javax.swing.JFrame {
         initComponents();
         this.setSize(350, 400);
         this.setTitle("Eliminar Correo");
+        habilitado.setEnabled(false);
         this.setLocationRelativeTo(null);
     }
 
@@ -38,7 +39,6 @@ public class VistaEliminar extends javax.swing.JFrame {
         buscar = new javax.swing.JButton();
         id_correo = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jLabel1.setText("ID de Correo: ");
