@@ -24,7 +24,7 @@ public class MysqlConnect {
 
     private final String DRIVER = "com.mysql.jdbc.Driver";
     private final String URL = "jdbc:mysql://localhost/";
-    public static final String DATABASE = "sca";
+    public static final String DATABASE = "depura_email";
     public static final String USER = "root";
     public static final String PASSWORD = "";
 
