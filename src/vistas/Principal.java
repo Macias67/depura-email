@@ -12,6 +12,8 @@ package vistas;
 public class Principal extends javax.swing.JFrame {
 
     private VistaCargar vistaCargar;
+    private VistaEditar vistaEditar;
+    private VistaEliminar vistaEliminar;
 
     /**
      * Creates new form Principal
@@ -43,11 +45,11 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menu_importar = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menu_editar = new javax.swing.JMenuItem();
+        menu_eliminar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -158,7 +160,7 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jMenu1.setText("Importar");
+        menu_importar.setText("Importar");
 
         jMenuItem3.setText("Importar TXT");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -166,17 +168,27 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        menu_importar.add(jMenuItem3);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menu_importar);
 
         jMenu2.setText("Gestionar");
 
-        jMenuItem1.setText("Editar");
-        jMenu2.add(jMenuItem1);
+        menu_editar.setText("Editar");
+        menu_editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_editarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menu_editar);
 
-        jMenuItem2.setText("Eliminar");
-        jMenu2.add(jMenuItem2);
+        menu_eliminar.setText("Eliminar");
+        menu_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_eliminarActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menu_eliminar);
 
         jMenuBar1.add(jMenu2);
 
@@ -221,6 +233,16 @@ public class Principal extends javax.swing.JFrame {
         vistaCargar.setLocationRelativeTo(this);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void menu_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_editarActionPerformed
+        vistaEditar = new VistaEditar();
+        vistaEditar.setVisible(true);
+    }//GEN-LAST:event_menu_editarActionPerformed
+
+    private void menu_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_eliminarActionPerformed
+        vistaEliminar = new VistaEliminar();
+        vistaEliminar.setVisible(true);
+    }//GEN-LAST:event_menu_eliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -262,17 +284,17 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JMenuItem menu_editar;
+    private javax.swing.JMenuItem menu_eliminar;
+    private javax.swing.JMenu menu_importar;
     // End of variables declaration//GEN-END:variables
 }

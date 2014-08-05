@@ -37,41 +37,39 @@ public class VistaEditar extends javax.swing.JFrame {
         cancelar = new javax.swing.JButton();
         origen = new javax.swing.JComboBox();
         grupo = new javax.swing.JComboBox();
+        buscar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jLabel1.setText("ID de Correo: ");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(30, 30, 90, 14);
-
-        id_correo.setEditable(false);
         getContentPane().add(id_correo);
         id_correo.setBounds(110, 30, 190, 20);
         getContentPane().add(correo);
-        correo.setBounds(90, 100, 210, 20);
+        correo.setBounds(90, 110, 210, 20);
 
         jLabel2.setText("Correo:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(30, 100, 50, 14);
+        jLabel2.setBounds(30, 110, 50, 14);
 
         jLabel3.setText("Origen: ");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(30, 150, 50, 14);
+        jLabel3.setBounds(30, 160, 50, 14);
 
         jLabel4.setText("Grupo: ");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(30, 200, 50, 14);
+        jLabel4.setBounds(30, 210, 50, 14);
 
         habilitado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         habilitado.setSelected(true);
         habilitado.setText("Habilitado");
         getContentPane().add(habilitado);
-        habilitado.setBounds(30, 250, 100, 23);
+        habilitado.setBounds(30, 260, 100, 23);
 
         guardar.setText("Guardar");
         getContentPane().add(guardar);
-        guardar.setBounds(120, 300, 90, 30);
+        guardar.setBounds(120, 310, 90, 30);
 
         cancelar.setText("Cancelar");
         cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,15 +78,19 @@ public class VistaEditar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cancelar);
-        cancelar.setBounds(220, 300, 90, 30);
+        cancelar.setBounds(220, 310, 90, 30);
 
         origen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(origen);
-        origen.setBounds(90, 150, 210, 20);
+        origen.setBounds(90, 160, 210, 20);
 
         grupo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         getContentPane().add(grupo);
-        grupo.setBounds(90, 200, 210, 20);
+        grupo.setBounds(90, 210, 210, 20);
+
+        buscar.setText("Buscar");
+        getContentPane().add(buscar);
+        buscar.setBounds(223, 60, 80, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -138,6 +140,7 @@ public class VistaEditar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscar;
     private javax.swing.JButton cancelar;
     private javax.swing.JTextField correo;
     private javax.swing.JComboBox grupo;

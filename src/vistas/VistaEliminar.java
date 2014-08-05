@@ -33,9 +33,10 @@ public class VistaEliminar extends javax.swing.JFrame {
         eliminar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         correo = new javax.swing.JLabel();
-        id_correo = new javax.swing.JLabel();
         origen = new javax.swing.JLabel();
         grupo = new javax.swing.JLabel();
+        buscar = new javax.swing.JButton();
+        id_correo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -46,25 +47,25 @@ public class VistaEliminar extends javax.swing.JFrame {
 
         jLabel2.setText("Correo:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(30, 100, 50, 14);
+        jLabel2.setBounds(30, 110, 50, 14);
 
         jLabel3.setText("Origen: ");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(30, 150, 50, 14);
+        jLabel3.setBounds(30, 160, 50, 14);
 
         jLabel4.setText("Grupo: ");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(30, 200, 50, 14);
+        jLabel4.setBounds(30, 210, 50, 14);
 
         habilitado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         habilitado.setSelected(true);
         habilitado.setText("Habilitado");
         getContentPane().add(habilitado);
-        habilitado.setBounds(30, 250, 100, 23);
+        habilitado.setBounds(30, 260, 100, 23);
 
         eliminar.setText("Eliminar");
         getContentPane().add(eliminar);
-        eliminar.setBounds(120, 300, 90, 30);
+        eliminar.setBounds(120, 310, 90, 30);
 
         cancelar.setText("Cancelar");
         cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -73,23 +74,25 @@ public class VistaEliminar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cancelar);
-        cancelar.setBounds(220, 300, 90, 30);
+        cancelar.setBounds(220, 310, 90, 30);
 
         correo.setText("CORREO");
         getContentPane().add(correo);
-        correo.setBounds(90, 100, 210, 14);
-
-        id_correo.setText("ID");
-        getContentPane().add(id_correo);
-        id_correo.setBounds(110, 30, 200, 14);
+        correo.setBounds(90, 110, 210, 14);
 
         origen.setText("ORIGEN");
         getContentPane().add(origen);
-        origen.setBounds(90, 150, 210, 14);
+        origen.setBounds(90, 160, 210, 14);
 
         grupo.setText("GRUPO");
         getContentPane().add(grupo);
-        grupo.setBounds(90, 200, 210, 14);
+        grupo.setBounds(90, 210, 210, 14);
+
+        buscar.setText("Buscar");
+        getContentPane().add(buscar);
+        buscar.setBounds(230, 60, 65, 23);
+        getContentPane().add(id_correo);
+        id_correo.setBounds(110, 30, 200, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -139,12 +142,13 @@ public class VistaEliminar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscar;
     private javax.swing.JButton cancelar;
     private javax.swing.JLabel correo;
     private javax.swing.JButton eliminar;
     private javax.swing.JLabel grupo;
     private javax.swing.JCheckBox habilitado;
-    private javax.swing.JLabel id_correo;
+    private javax.swing.JTextField id_correo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
