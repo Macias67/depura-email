@@ -5,8 +5,11 @@
  */
 package vistas;
 
-import vistas.carga.AddOrigen;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
 import vistas.carga.AddGrupo;
+import vistas.carga.AddOrigen;
 
 /**
  *
@@ -26,6 +29,7 @@ public class VistaCargar extends javax.swing.JDialog {
     public VistaCargar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -39,8 +43,8 @@ public class VistaCargar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        selector_archivo = new javax.swing.JTextField();
+        seleccionar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         openAddOrigen = new javax.swing.JButton();
@@ -53,12 +57,16 @@ public class VistaCargar extends javax.swing.JDialog {
 
         jLabel1.setText("Ruta del archivo:");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jTextField1.setText("jTextField1");
-        jTextField1.setEnabled(false);
+        selector_archivo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        selector_archivo.setEnabled(false);
 
-        jButton1.setText("Selecciona");
-        jButton1.setToolTipText("");
+        seleccionar.setText("Seleccionar");
+        seleccionar.setToolTipText("");
+        seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seleccionarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel2.setText("Origen:");
@@ -102,9 +110,9 @@ public class VistaCargar extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(selector_archivo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1))
+                            .addComponent(seleccionar))
                         .addComponent(jLabel2)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(openAddOrigen)
@@ -124,8 +132,8 @@ public class VistaCargar extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(selector_archivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(seleccionar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -177,7 +185,43 @@ public class VistaCargar extends javax.swing.JDialog {
         vistaAddGrupo.setVisible(true);
     }//GEN-LAST:event_openAddGrupoActionPerformed
 
-    /**
+    private void seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarActionPerformed
+        //Ventana de exploracion
+        JFileChooser explorador = new JFileChooser();
+        //Se le aplica un filtro al explorador
+        explorador.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+        //abrimos el explorador y esperamos la desicion el usuario y abre un archivo o si calcela
+        int returnVal = explorador.showOpenDialog(this);
+        //si abre un archivo
+        if(returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            //pintamos el nombre del archivo en el textfield por estetica
+            selector_archivo.setText(explorador.getSelectedFile().getName());
+            //guardamos la ruta del archivo en un objeto tipo File que procesaremos
+            File ruta_archivo=explorador.getSelectedFile();
+            
+            try {
+                //se crea el buffer que sera encargado de leer el archivo
+                BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta_archivo));
+                //variable temporal que contendra la linea del archivo leida
+                String linea="";
+                int cont=1;
+                
+                //mientras la linea leida no sea nula se ejecuta el codigo
+                while ((linea=leer_archivo.readLine())!=null) {
+                    System.out.println("Correo "+cont+" = "+linea);
+                    cont++;
+                }
+                
+                //se cierra el buffer
+                leer_archivo.close();
+            } catch (Exception e) {
+                System.out.println("Error : "+e);
+            }
+        }
+    }//GEN-LAST:event_seleccionarActionPerformed
+
+    /**www.h
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -215,7 +259,6 @@ public class VistaCargar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
@@ -223,8 +266,9 @@ public class VistaCargar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton openAddGrupo;
     private javax.swing.JButton openAddOrigen;
+    private javax.swing.JButton seleccionar;
+    private javax.swing.JTextField selector_archivo;
     // End of variables declaration//GEN-END:variables
 }
