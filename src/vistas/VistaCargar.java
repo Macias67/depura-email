@@ -40,8 +40,6 @@ public class VistaCargar extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox();
         jButton4 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargar TXT", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jLabel1.setText("Ruta del archivo:");
