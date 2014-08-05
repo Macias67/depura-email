@@ -13,7 +13,7 @@ public class VistaEditar extends javax.swing.JFrame {
     public VistaEditar() {
         initComponents();
         this.setSize(350, 400);
-        this.setTitle("Editar Email");
+        this.setTitle("Editar Correo");
         this.setLocationRelativeTo(null);
     }
 
@@ -43,17 +43,17 @@ public class VistaEditar extends javax.swing.JFrame {
 
         jLabel1.setText("ID de Correo: ");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(30, 30, 70, 14);
+        jLabel1.setBounds(30, 30, 90, 14);
 
         id_correo.setEditable(false);
         getContentPane().add(id_correo);
-        id_correo.setBounds(100, 30, 200, 20);
+        id_correo.setBounds(110, 30, 190, 20);
         getContentPane().add(correo);
         correo.setBounds(90, 100, 210, 20);
 
         jLabel2.setText("Correo:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(30, 100, 40, 14);
+        jLabel2.setBounds(30, 100, 50, 14);
 
         jLabel3.setText("Origen: ");
         getContentPane().add(jLabel3);

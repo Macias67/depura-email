@@ -12,7 +12,7 @@ public class VistaEliminar extends javax.swing.JFrame {
     public VistaEliminar() {
         initComponents();
         this.setSize(350, 400);
-        this.setTitle("Eliminar Email");
+        this.setTitle("Eliminar Correo");
         this.setLocationRelativeTo(null);
     }
 
