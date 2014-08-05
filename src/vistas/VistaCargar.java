@@ -3,19 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vistas;
+
+import vistas.carga.AddOrigen;
+import vistas.carga.AddGrupo;
 
 /**
  *
  * @author Macias
  */
-public class VistaCargar extends javax.swing.JFrame {
+public class VistaCargar extends javax.swing.JDialog {
+    
+    private AddOrigen vistaAddOrigen;
+    private AddGrupo vistaAddGrupo;
 
     /**
      * Creates new form Principal
+     *
+     * @param parent
+     * @param modal
      */
-    public VistaCargar() {
+    public VistaCargar(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -34,13 +43,13 @@ public class VistaCargar extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        openAddOrigen = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox();
-        jButton3 = new javax.swing.JButton();
+        openAddGrupo = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox();
         jButton4 = new javax.swing.JButton();
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargar TXT", 0, 0, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargar TXT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jLabel1.setText("Ruta del archivo:");
 
@@ -57,15 +66,25 @@ public class VistaCargar extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel3.setText("Grupo:");
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jButton2.setText("+");
-        jButton2.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        openAddOrigen.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        openAddOrigen.setText("+");
+        openAddOrigen.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        openAddOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openAddOrigenActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jButton3.setText("+");
-        jButton3.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        openAddGrupo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        openAddGrupo.setText("+");
+        openAddGrupo.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        openAddGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openAddGrupoActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -88,12 +107,12 @@ public class VistaCargar extends javax.swing.JFrame {
                             .addComponent(jButton1))
                         .addComponent(jLabel2)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton2)
+                            .addComponent(openAddOrigen)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(openAddGrupo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -111,13 +130,13 @@ public class VistaCargar extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(openAddOrigen)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(openAddGrupo)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,6 +163,20 @@ public class VistaCargar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void openAddOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openAddOrigenActionPerformed
+        // TODO add your handling code here:
+        vistaAddOrigen = new AddOrigen(Principal.getInstance(), true);
+        vistaAddOrigen.setLocationRelativeTo(this);
+        vistaAddOrigen.setVisible(true);
+    }//GEN-LAST:event_openAddOrigenActionPerformed
+
+    private void openAddGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openAddGrupoActionPerformed
+        // TODO add your handling code here:
+        vistaAddGrupo = new AddGrupo(Principal.getInstance(), true);
+        vistaAddGrupo.setLocationRelativeTo(this);
+        vistaAddGrupo.setVisible(true);
+    }//GEN-LAST:event_openAddGrupoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -160,29 +193,29 @@ public class VistaCargar extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaCargar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaCargar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaCargar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VistaCargar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new VistaCargar().setVisible(true);
+                VistaCargar dialog = new VistaCargar(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
@@ -191,5 +224,7 @@ public class VistaCargar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton openAddGrupo;
+    private javax.swing.JButton openAddOrigen;
     // End of variables declaration//GEN-END:variables
 }
