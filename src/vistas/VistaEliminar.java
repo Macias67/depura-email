@@ -32,21 +32,21 @@ public class VistaEliminar extends javax.swing.JFrame {
         habilitado = new javax.swing.JCheckBox();
         eliminar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
-        email = new javax.swing.JLabel();
-        id_email = new javax.swing.JLabel();
+        correo = new javax.swing.JLabel();
+        id_correo = new javax.swing.JLabel();
         origen = new javax.swing.JLabel();
         grupo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jLabel1.setText("ID de Email: ");
+        jLabel1.setText("ID de Correo: ");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(30, 30, 70, 14);
+        jLabel1.setBounds(30, 30, 80, 14);
 
-        jLabel2.setText("Email: ");
+        jLabel2.setText("Correo:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(30, 100, 40, 14);
+        jLabel2.setBounds(30, 100, 50, 14);
 
         jLabel3.setText("Origen: ");
         getContentPane().add(jLabel3);
@@ -75,13 +75,13 @@ public class VistaEliminar extends javax.swing.JFrame {
         getContentPane().add(cancelar);
         cancelar.setBounds(220, 300, 90, 30);
 
-        email.setText("EMAIL");
-        getContentPane().add(email);
-        email.setBounds(90, 100, 210, 14);
+        correo.setText("CORREO");
+        getContentPane().add(correo);
+        correo.setBounds(90, 100, 210, 14);
 
-        id_email.setText("ID");
-        getContentPane().add(id_email);
-        id_email.setBounds(100, 30, 200, 14);
+        id_correo.setText("ID");
+        getContentPane().add(id_correo);
+        id_correo.setBounds(110, 30, 200, 14);
 
         origen.setText("ORIGEN");
         getContentPane().add(origen);
@@ -95,8 +95,8 @@ public class VistaEliminar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        id_email.setText("ID");
-        email.setText("EMAIL");
+        id_correo.setText("ID");
+        correo.setText("CORREO");
         origen.setText("ORIGEN");
         grupo.setText("GRUPO");
         habilitado.setSelected(true);
@@ -140,11 +140,11 @@ public class VistaEliminar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
+    private javax.swing.JLabel correo;
     private javax.swing.JButton eliminar;
-    private javax.swing.JLabel email;
     private javax.swing.JLabel grupo;
     private javax.swing.JCheckBox habilitado;
-    private javax.swing.JLabel id_email;
+    private javax.swing.JLabel id_correo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

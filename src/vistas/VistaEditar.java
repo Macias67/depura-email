@@ -27,8 +27,8 @@ public class VistaEditar extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        id_email = new javax.swing.JTextField();
-        email = new javax.swing.JTextField();
+        id_correo = new javax.swing.JTextField();
+        correo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -41,17 +41,17 @@ public class VistaEditar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jLabel1.setText("ID de Email: ");
+        jLabel1.setText("ID de Correo: ");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(30, 30, 70, 14);
 
-        id_email.setEditable(false);
-        getContentPane().add(id_email);
-        id_email.setBounds(100, 30, 200, 20);
-        getContentPane().add(email);
-        email.setBounds(90, 100, 210, 20);
+        id_correo.setEditable(false);
+        getContentPane().add(id_correo);
+        id_correo.setBounds(100, 30, 200, 20);
+        getContentPane().add(correo);
+        correo.setBounds(90, 100, 210, 20);
 
-        jLabel2.setText("Email: ");
+        jLabel2.setText("Correo:");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(30, 100, 40, 14);
 
@@ -94,8 +94,8 @@ public class VistaEditar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        id_email.setText("");
-        email.setText("");
+        id_correo.setText("");
+        correo.setText("");
         origen.setSelectedIndex(1);
         grupo.setSelectedIndex(1);
         habilitado.setSelected(true);
@@ -139,11 +139,11 @@ public class VistaEditar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
-    private javax.swing.JTextField email;
+    private javax.swing.JTextField correo;
     private javax.swing.JComboBox grupo;
     private javax.swing.JButton guardar;
     private javax.swing.JCheckBox habilitado;
-    private javax.swing.JTextField id_email;
+    private javax.swing.JTextField id_correo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
