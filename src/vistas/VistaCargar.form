@@ -55,26 +55,26 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="procesar_archivo_btn" min="-2" pref="339" max="-2" attributes="0"/>
+                      <Component id="btnProcesar" min="-2" pref="339" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="archivo_txt" min="-2" pref="250" max="-2" attributes="0"/>
+                              <Component id="tfArchivo" min="-2" pref="250" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="seleccionar_btn" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSeleccionar" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="AddOrigen_btn" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddOrigen" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="origen_select" max="32767" attributes="0"/>
+                              <Component id="selectOrigen" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="AddGrupo_btn" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAddGrupo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="grupo_select" min="-2" pref="312" max="-2" attributes="0"/>
+                          <Component id="selectGrupo" min="-2" pref="312" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -88,25 +88,25 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="archivo_txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="seleccionar_btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tfArchivo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnSeleccionar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="AddOrigen_btn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="origen_select" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnAddOrigen" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="selectOrigen" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="AddGrupo_btn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="grupo_select" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnAddGrupo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="selectGrupo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="procesar_archivo_btn" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnProcesar" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -118,7 +118,7 @@
             <Property name="text" type="java.lang.String" value="Ruta del archivo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="archivo_txt">
+        <Component class="javax.swing.JTextField" name="tfArchivo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="10" style="0"/>
@@ -126,13 +126,13 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="seleccionar_btn">
+        <Component class="javax.swing.JButton" name="btnSeleccionar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Seleccionar"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seleccionar_btnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSeleccionarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -151,7 +151,7 @@
             <Property name="text" type="java.lang.String" value="Grupo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="AddOrigen_btn">
+        <Component class="javax.swing.JButton" name="btnAddOrigen">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="10" style="0"/>
@@ -162,10 +162,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddOrigen_btnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddOrigenActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="origen_select">
+        <Component class="javax.swing.JComboBox" name="selectOrigen">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -180,7 +180,7 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="AddGrupo_btn">
+        <Component class="javax.swing.JButton" name="btnAddGrupo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="10" style="0"/>
@@ -191,10 +191,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddGrupo_btnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddGrupoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="grupo_select">
+        <Component class="javax.swing.JComboBox" name="selectGrupo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -209,13 +209,16 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="procesar_archivo_btn">
+        <Component class="javax.swing.JButton" name="btnProcesar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Procesar archivo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProcesarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

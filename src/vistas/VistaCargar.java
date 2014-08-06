@@ -5,9 +5,11 @@
  */
 package vistas;
 
+import controlador.RegistraCorreo;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import javax.swing.JOptionPane;
 import vistas.carga.AddGrupo;
 import vistas.carga.AddOrigen;
 
@@ -19,6 +21,7 @@ public class VistaCargar extends javax.swing.JDialog {
     
     private AddOrigen vistaAddOrigen;
     private AddGrupo vistaAddGrupo;
+    private String rutaArchivo;
 
     /**
      * Creates new form Principal
@@ -43,28 +46,28 @@ public class VistaCargar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        archivo_txt = new javax.swing.JTextField();
-        seleccionar_btn = new javax.swing.JButton();
+        tfArchivo = new javax.swing.JTextField();
+        btnSeleccionar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        AddOrigen_btn = new javax.swing.JButton();
-        origen_select = new javax.swing.JComboBox();
-        AddGrupo_btn = new javax.swing.JButton();
-        grupo_select = new javax.swing.JComboBox();
-        procesar_archivo_btn = new javax.swing.JButton();
+        btnAddOrigen = new javax.swing.JButton();
+        selectOrigen = new javax.swing.JComboBox();
+        btnAddGrupo = new javax.swing.JButton();
+        selectGrupo = new javax.swing.JComboBox();
+        btnProcesar = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargar TXT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jLabel1.setText("Ruta del archivo:");
 
-        archivo_txt.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        archivo_txt.setEnabled(false);
+        tfArchivo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        tfArchivo.setEnabled(false);
 
-        seleccionar_btn.setText("Seleccionar");
-        seleccionar_btn.setToolTipText("");
-        seleccionar_btn.addActionListener(new java.awt.event.ActionListener() {
+        btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.setToolTipText("");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                seleccionar_btnActionPerformed(evt);
+                btnSeleccionarActionPerformed(evt);
             }
         });
 
@@ -74,30 +77,35 @@ public class VistaCargar extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel3.setText("Grupo:");
 
-        AddOrigen_btn.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        AddOrigen_btn.setText("+");
-        AddOrigen_btn.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        AddOrigen_btn.addActionListener(new java.awt.event.ActionListener() {
+        btnAddOrigen.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnAddOrigen.setText("+");
+        btnAddOrigen.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        btnAddOrigen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddOrigen_btnActionPerformed(evt);
+                btnAddOrigenActionPerformed(evt);
             }
         });
 
-        origen_select.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectOrigen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        AddGrupo_btn.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        AddGrupo_btn.setText("+");
-        AddGrupo_btn.setMargin(new java.awt.Insets(2, 5, 2, 5));
-        AddGrupo_btn.addActionListener(new java.awt.event.ActionListener() {
+        btnAddGrupo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnAddGrupo.setText("+");
+        btnAddGrupo.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        btnAddGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddGrupo_btnActionPerformed(evt);
+                btnAddGrupoActionPerformed(evt);
             }
         });
 
-        grupo_select.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectGrupo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        procesar_archivo_btn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        procesar_archivo_btn.setText("Procesar archivo");
+        btnProcesar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnProcesar.setText("Procesar archivo");
+        btnProcesar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcesarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,23 +114,23 @@ public class VistaCargar extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(procesar_archivo_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(archivo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(seleccionar_btn))
+                            .addComponent(btnSeleccionar))
                         .addComponent(jLabel2)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(AddOrigen_btn)
+                            .addComponent(btnAddOrigen)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(origen_select, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(selectOrigen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(AddGrupo_btn)
+                        .addComponent(btnAddGrupo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(grupo_select, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,22 +140,22 @@ public class VistaCargar extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(archivo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(seleccionar_btn))
+                    .addComponent(tfArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSeleccionar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AddOrigen_btn)
-                    .addComponent(origen_select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAddOrigen)
+                    .addComponent(selectOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AddGrupo_btn)
-                    .addComponent(grupo_select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAddGrupo)
+                    .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(procesar_archivo_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -171,21 +179,21 @@ public class VistaCargar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void AddOrigen_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddOrigen_btnActionPerformed
+    private void btnAddOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOrigenActionPerformed
         // TODO add your handling code here:
         vistaAddOrigen = new AddOrigen(Principal.getInstance(), true);
         vistaAddOrigen.setLocationRelativeTo(this);
         vistaAddOrigen.setVisible(true);
-    }//GEN-LAST:event_AddOrigen_btnActionPerformed
+    }//GEN-LAST:event_btnAddOrigenActionPerformed
 
-    private void AddGrupo_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddGrupo_btnActionPerformed
+    private void btnAddGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddGrupoActionPerformed
         // TODO add your handling code here:
         vistaAddGrupo = new AddGrupo(Principal.getInstance(), true);
         vistaAddGrupo.setLocationRelativeTo(this);
         vistaAddGrupo.setVisible(true);
-    }//GEN-LAST:event_AddGrupo_btnActionPerformed
+    }//GEN-LAST:event_btnAddGrupoActionPerformed
 
-    private void seleccionar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionar_btnActionPerformed
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         //Ventana de exploracion
         JFileChooser explorador = new JFileChooser();
         //Se le aplica un filtro al explorador
@@ -196,29 +204,30 @@ public class VistaCargar extends javax.swing.JDialog {
         if(returnVal == JFileChooser.APPROVE_OPTION)
         {
             //pintamos el nombre del archivo en el textfield por estetica
-            archivo_txt.setText(explorador.getSelectedFile().getName());
-            //guardamos la ruta del archivo en un objeto tipo File que procesaremos
-            File ruta_archivo=explorador.getSelectedFile();
-            
-            try {
-                //variable temporal que contendra la linea del archivo leida
-                try ( //se crea el buffer que sera encargado de leer el archivo
-                        BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta_archivo))) {
-                    //variable temporal que contendra la linea del archivo leida
-                    String linea="";
-                    int cont=1;
-                    
-                    //mientras la linea leida no sea nula se ejecuta el codigo
-                    while ((linea=leer_archivo.readLine())!=null) {
-                        System.out.println("Correo "+cont+" = "+linea);
-                        cont++;
-                    }
-                }
-            } catch (IOException e) {
-                System.out.println("Error : "+e);
-            }
+            tfArchivo.setText(explorador.getSelectedFile().getAbsolutePath());
         }
-    }//GEN-LAST:event_seleccionar_btnActionPerformed
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarActionPerformed
+       //revision de que hay un archivo seleccionado
+        if(tfArchivo.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "No ha seleccionado nungun archivo!", "Problemas.", JOptionPane.WARNING_MESSAGE);
+        }else{
+            try {
+                rutaArchivo=tfArchivo.getText();
+                RegistraCorreo registraCoreo = new RegistraCorreo(rutaArchivo);
+                
+                if(registraCoreo.guardarCorreos()){
+                    tfArchivo.setText("");
+                    JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(this, "ERROR: No se guardaron tus correos :/ ", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "ERROR: "+e+".", "Error", JOptionPane.ERROR_MESSAGE);
+            }   
+        }
+    }//GEN-LAST:event_btnProcesarActionPerformed
 
     /**www.h
      * @param args the command line arguments
@@ -258,16 +267,16 @@ public class VistaCargar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddGrupo_btn;
-    private javax.swing.JButton AddOrigen_btn;
-    private javax.swing.JTextField archivo_txt;
-    private javax.swing.JComboBox grupo_select;
+    private javax.swing.JButton btnAddGrupo;
+    private javax.swing.JButton btnAddOrigen;
+    private javax.swing.JButton btnProcesar;
+    private javax.swing.JButton btnSeleccionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JComboBox origen_select;
-    private javax.swing.JButton procesar_archivo_btn;
-    private javax.swing.JButton seleccionar_btn;
+    public static javax.swing.JComboBox selectGrupo;
+    public static javax.swing.JComboBox selectOrigen;
+    private javax.swing.JTextField tfArchivo;
     // End of variables declaration//GEN-END:variables
 }
