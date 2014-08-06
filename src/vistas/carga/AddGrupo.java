@@ -114,7 +114,8 @@ public class AddGrupo extends javax.swing.JDialog {
                 RegistraGrupo registraGrupo = new RegistraGrupo(grupo);
 
                 if(registraGrupo.checarGrupo(grupo)){
-                    JOptionPane.showMessageDialog(this, "El grupo "+grupo.getNombre()+" ya se encuentra registrado!", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
+                    tfGrupo.setText("");
+                    JOptionPane.showMessageDialog(this, "El grupo "+grupo.getNombre()+" ya se encuentra registrado!", "Problemas.", JOptionPane.WARNING_MESSAGE);
                 }else{
                     if (registraGrupo.guardarGrupo()) {
                         tfGrupo.setText("");

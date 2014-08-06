@@ -116,7 +116,8 @@ public class AddOrigen extends javax.swing.JDialog {
                 RegistraOrigen registraOrigen = new RegistraOrigen(origen);
                 
                 if(registraOrigen.checarOrigen(origen)){
-                     JOptionPane.showMessageDialog(this, "El origen "+origen.getNombre()+" ya esta registrado!", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
+                    tfOrigen.setText("");
+                     JOptionPane.showMessageDialog(this, "El origen "+origen.getNombre()+" ya esta registrado!", "Problemas.", JOptionPane.WARNING_MESSAGE);
                 }else{
                     if (registraOrigen.guardarOrigen()) {
                         tfOrigen.setText("");
