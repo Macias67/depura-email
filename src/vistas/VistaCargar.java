@@ -201,21 +201,20 @@ public class VistaCargar extends javax.swing.JDialog {
             File ruta_archivo=explorador.getSelectedFile();
             
             try {
-                //se crea el buffer que sera encargado de leer el archivo
-                BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta_archivo));
                 //variable temporal que contendra la linea del archivo leida
-                String linea="";
-                int cont=1;
-                
-                //mientras la linea leida no sea nula se ejecuta el codigo
-                while ((linea=leer_archivo.readLine())!=null) {
-                    System.out.println("Correo "+cont+" = "+linea);
-                    cont++;
+                try ( //se crea el buffer que sera encargado de leer el archivo
+                        BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta_archivo))) {
+                    //variable temporal que contendra la linea del archivo leida
+                    String linea="";
+                    int cont=1;
+                    
+                    //mientras la linea leida no sea nula se ejecuta el codigo
+                    while ((linea=leer_archivo.readLine())!=null) {
+                        System.out.println("Correo "+cont+" = "+linea);
+                        cont++;
+                    }
                 }
-                
-                //se cierra el buffer
-                leer_archivo.close();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.out.println("Error : "+e);
             }
         }
