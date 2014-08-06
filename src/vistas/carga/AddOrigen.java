@@ -47,10 +47,11 @@ public class AddOrigen extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agruegar Origen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agregar Origen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("Nombre:");
+
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +100,8 @@ public class AddOrigen extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.getAccessibleContext().setAccessibleName("Agregar Origen");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -112,14 +115,17 @@ public class AddOrigen extends javax.swing.JDialog {
                 Origen origen = new Origen(nombre);
                 RegistraOrigen registraOrigen = new RegistraOrigen(origen);
                 
-                if (registraOrigen.guardarOrigen()) {
-                    tfOrigen.setText("");
-                    JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de origenes.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
-                    
-                } else {
-                    JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
+                if(registraOrigen.checarOrigen(origen)){
+                     JOptionPane.showMessageDialog(this, "El origen "+origen.getNombre()+" ya esta registrado!", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    if (registraOrigen.guardarOrigen()) {
+                        tfOrigen.setText("");
+                        JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de origenes.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
-                
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
                 Logger.getLogger(AddGrupo.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "ERROR: "+ex.getMessage()+".", "Error", JOptionPane.ERROR_MESSAGE);

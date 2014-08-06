@@ -5,10 +5,12 @@
  */
 package controlador;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import modelo.Grupo;
 import modelo.MysqlConnect;
 import modelo.NombreTablas;
+import modelo.Origen;
 
 /**
  *
@@ -23,10 +25,16 @@ public class RegistraGrupo {
         this.grupo = grupo;
         this.conexion = MysqlConnect.getConnection();
     }
+    
+    public boolean checarGrupo(Grupo grupo) throws SQLException{
+        String query = "SELECT * FROM `"+NombreTablas.GRUPOS.getValue()+"` where `grupo`='"+grupo.getNombre()+"'";
+        ResultSet respuesta = this.conexion.executeQuery(query);
+        
+        return (respuesta.next());
+    }
 
     public boolean guardarGrupo() throws SQLException {
         String query = "INSERT INTO `" + NombreTablas.GRUPOS.getValue() + "` (`grupo`) VALUES ('" + this.grupo.getNombre() + "')";
-        System.out.println(query);
         int resp = this.conexion.executeUpdate(query);
         return (resp == 1);
     }
