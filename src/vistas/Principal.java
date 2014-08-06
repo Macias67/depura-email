@@ -49,9 +49,9 @@ public class Principal extends javax.swing.JFrame {
         origen_select = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         grupo_select = new javax.swing.JComboBox();
-        habilitado = new javax.swing.JCheckBox();
+        habilitado_cbx = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
-        correo = new javax.swing.JTextField();
+        correo_txt = new javax.swing.JTextField();
         buscar_btn = new javax.swing.JButton();
         limpiar_btn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -80,16 +80,16 @@ public class Principal extends javax.swing.JFrame {
 
         grupo_select.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        habilitado.setText("Inabilitados");
-        habilitado.addActionListener(new java.awt.event.ActionListener() {
+        habilitado_cbx.setText("Inabilitados");
+        habilitado_cbx.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                habilitadoActionPerformed(evt);
+                habilitado_cbxActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Correo:");
 
-        correo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        correo_txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         buscar_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         buscar_btn.setText("Buscar");
@@ -120,12 +120,12 @@ public class Principal extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(grupo_select, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(habilitado, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
+                                .addComponent(habilitado_cbx, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(458, 458, 458))
-                    .addComponent(correo)))
+                    .addComponent(correo_txt)))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {grupo_select, origen_select});
@@ -135,7 +135,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(correo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -144,7 +144,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(origen_select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(grupo_select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(habilitado))
+                    .addComponent(habilitado_cbx))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buscar_btn)
@@ -259,13 +259,13 @@ public class Principal extends javax.swing.JFrame {
         vistaEliminar.setVisible(true);
     }//GEN-LAST:event_menu_eliminarActionPerformed
 
-    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
-        if (habilitado.isSelected()) {
-            habilitado.setText("Habilitados");
+    private void habilitado_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitado_cbxActionPerformed
+        if (habilitado_cbx.isSelected()) {
+            habilitado_cbx.setText("Habilitados");
         } else {
-            habilitado.setText("Inhabilitados");
+            habilitado_cbx.setText("Inhabilitados");
         }
-    }//GEN-LAST:event_habilitadoActionPerformed
+    }//GEN-LAST:event_habilitado_cbxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,9 +301,9 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscar_btn;
-    private javax.swing.JTextField correo;
+    private javax.swing.JTextField correo_txt;
     private javax.swing.JComboBox grupo_select;
-    private javax.swing.JCheckBox habilitado;
+    private javax.swing.JCheckBox habilitado_cbx;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

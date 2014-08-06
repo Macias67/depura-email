@@ -62,7 +62,7 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel4" max="32767" attributes="0"/>
                               <Component id="jLabel3" max="32767" attributes="0"/>
-                              <Component id="id_correo" max="32767" attributes="0"/>
+                              <Component id="id_correo_txt" max="32767" attributes="0"/>
                               <Component id="jLabel1" max="32767" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -73,7 +73,7 @@
                                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="correo" max="32767" attributes="0"/>
+                                      <Component id="correo_txt" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
@@ -88,7 +88,7 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="habilitado" min="-2" max="-2" attributes="0"/>
+                              <Component id="habilitado_cbx" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="buscar_btn" linkSize="1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -114,8 +114,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="id_correo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="correo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="id_correo_txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="correo_txt" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -128,7 +128,7 @@
                       <Component id="grupo_select" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="habilitado" min="-2" max="-2" attributes="0"/>
+                  <Component id="habilitado_cbx" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="buscar_btn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -149,7 +149,7 @@
             <Property name="text" type="java.lang.String" value="ID correo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="id_correo">
+        <Component class="javax.swing.JTextField" name="id_correo_txt">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -159,7 +159,7 @@
             <Property name="text" type="java.lang.String" value="Correo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="correo">
+        <Component class="javax.swing.JTextField" name="correo_txt">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -216,12 +216,12 @@
             <Property name="text" type="java.lang.String" value="Salir"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="habilitado">
+        <Component class="javax.swing.JCheckBox" name="habilitado_cbx">
           <Properties>
             <Property name="text" type="java.lang.String" value="Inhabilitado"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="habilitadoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="habilitado_cbxActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

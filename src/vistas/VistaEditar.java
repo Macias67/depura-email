@@ -32,9 +32,9 @@ public class VistaEditar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        id_correo = new javax.swing.JTextField();
+        id_correo_txt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        correo = new javax.swing.JTextField();
+        correo_txt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         origen_select = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
@@ -42,7 +42,7 @@ public class VistaEditar extends javax.swing.JDialog {
         buscar_btn = new javax.swing.JButton();
         guardar_btn = new javax.swing.JButton();
         salir_btn = new javax.swing.JButton();
-        habilitado = new javax.swing.JCheckBox();
+        habilitado_cbx = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -70,10 +70,10 @@ public class VistaEditar extends javax.swing.JDialog {
 
         salir_btn.setText("Salir");
 
-        habilitado.setText("Inhabilitado");
-        habilitado.addActionListener(new java.awt.event.ActionListener() {
+        habilitado_cbx.setText("Inhabilitado");
+        habilitado_cbx.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                habilitadoActionPerformed(evt);
+                habilitado_cbxActionPerformed(evt);
             }
         });
 
@@ -88,7 +88,7 @@ public class VistaEditar extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(id_correo)
+                            .addComponent(id_correo_txt)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -97,7 +97,7 @@ public class VistaEditar extends javax.swing.JDialog {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(correo)))
+                                    .addComponent(correo_txt)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
                                 .addComponent(origen_select, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -106,7 +106,7 @@ public class VistaEditar extends javax.swing.JDialog {
                                 .addComponent(grupo_select, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(habilitado)
+                            .addComponent(habilitado_cbx)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(buscar_btn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -128,8 +128,8 @@ public class VistaEditar extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(id_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(id_correo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(correo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -139,7 +139,7 @@ public class VistaEditar extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(grupo_select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(habilitado)
+                .addComponent(habilitado_cbx)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buscar_btn)
@@ -168,13 +168,13 @@ public class VistaEditar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void habilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitadoActionPerformed
-        if(habilitado.isSelected()){
-            habilitado.setText("Habilitado");
+    private void habilitado_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitado_cbxActionPerformed
+        if(habilitado_cbx.isSelected()){
+            habilitado_cbx.setText("Habilitado");
         }else{
-            habilitado.setText("Inhabilitado");
+            habilitado_cbx.setText("Inhabilitado");
         }
-    }//GEN-LAST:event_habilitadoActionPerformed
+    }//GEN-LAST:event_habilitado_cbxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,11 +220,11 @@ public class VistaEditar extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscar_btn;
-    private javax.swing.JTextField correo;
+    private javax.swing.JTextField correo_txt;
     private javax.swing.JComboBox grupo_select;
     private javax.swing.JButton guardar_btn;
-    private javax.swing.JCheckBox habilitado;
-    private javax.swing.JTextField id_correo;
+    private javax.swing.JCheckBox habilitado_cbx;
+    private javax.swing.JTextField id_correo_txt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

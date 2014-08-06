@@ -33,7 +33,7 @@ public class AddOrigen extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        nuevo_origen = new javax.swing.JTextField();
+        origen_txt = new javax.swing.JTextField();
         guardar_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -44,6 +44,11 @@ public class AddOrigen extends javax.swing.JDialog {
         jLabel1.setText("Nombre:");
 
         guardar_btn.setText("Guardar");
+        guardar_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardar_btnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -52,7 +57,7 @@ public class AddOrigen extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nuevo_origen)
+                    .addComponent(origen_txt)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -66,7 +71,7 @@ public class AddOrigen extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nuevo_origen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(origen_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(guardar_btn)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -91,6 +96,10 @@ public class AddOrigen extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void guardar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar_btnActionPerformed
+        String nuevo_origen = origen_txt.getText();
+    }//GEN-LAST:event_guardar_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,6 +148,6 @@ public class AddOrigen extends javax.swing.JDialog {
     private javax.swing.JButton guardar_btn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField nuevo_origen;
+    private javax.swing.JTextField origen_txt;
     // End of variables declaration//GEN-END:variables
 }

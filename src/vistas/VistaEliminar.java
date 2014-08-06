@@ -31,14 +31,14 @@ public class VistaEliminar extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        id_correo = new javax.swing.JTextField();
+        id_correo_txt = new javax.swing.JTextField();
         buscar_btn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        correo = new javax.swing.JLabel();
+        correo_lbl = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        origen = new javax.swing.JLabel();
+        origen_lbl = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        grupo = new javax.swing.JLabel();
+        grupo_lbl = new javax.swing.JLabel();
         eliminar_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -48,27 +48,27 @@ public class VistaEliminar extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("ID correo:");
 
-        id_correo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        id_correo_txt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         buscar_btn.setText("Buscar");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel2.setText("Correo:");
 
-        correo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        correo.setText("luismacias.angulo@gmail.com");
+        correo_lbl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        correo_lbl.setText("luismacias.angulo@gmail.com");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel4.setText("Origen:");
 
-        origen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        origen.setText("ORIGEN");
+        origen_lbl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        origen_lbl.setText("ORIGEN");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel6.setText("Grupo:");
 
-        grupo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        grupo.setText("GRUPO");
+        grupo_lbl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        grupo_lbl.setText("GRUPO");
 
         eliminar_btn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         eliminar_btn.setText("Eliminar");
@@ -80,18 +80,18 @@ public class VistaEliminar extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(correo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(correo_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(id_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(id_correo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(buscar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4)
-                    .addComponent(origen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(origen_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6)
-                    .addComponent(grupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grupo_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(eliminar_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -104,19 +104,19 @@ public class VistaEliminar extends javax.swing.JDialog {
                         .addComponent(buscar_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                         .addGap(2, 2, 2))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(id_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(id_correo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(correo)
+                .addComponent(correo_lbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(origen)
+                .addComponent(origen_lbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(grupo)
+                .addComponent(grupo_lbl)
                 .addGap(18, 18, 18)
                 .addComponent(eliminar_btn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -186,15 +186,15 @@ public class VistaEliminar extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscar_btn;
-    private javax.swing.JLabel correo;
+    private javax.swing.JLabel correo_lbl;
     private javax.swing.JButton eliminar_btn;
-    private javax.swing.JLabel grupo;
-    private javax.swing.JTextField id_correo;
+    private javax.swing.JLabel grupo_lbl;
+    private javax.swing.JTextField id_correo_txt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel origen;
+    private javax.swing.JLabel origen_lbl;
     // End of variables declaration//GEN-END:variables
 }
