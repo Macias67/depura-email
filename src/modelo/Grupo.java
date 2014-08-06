@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package modelo;
 
 /**
  *
  * @author Macias
  */
-public class Origen {
-
+public class Grupo {
+    
     private String nombre;
+    
+    public Grupo() {}
 
-    public Origen() {
+    public Grupo(String nombre) {
+        this.nombre = nombre;
     }
-
-    public Origen(String origen) {
-        this.nombre = origen;
-    }
-
+     
     public String getNombre() {
         return nombre;
     }
@@ -27,5 +27,5 @@ public class Origen {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
 }

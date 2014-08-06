@@ -35,15 +35,7 @@ CREATE TABLE IF NOT EXISTS `correos` (
   PRIMARY KEY (`id_correo`),
   KEY `id_origen` (`id_origen`),
   KEY `id_grupo` (`id_grupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Volcado de datos para la tabla `correos`
---
-
-INSERT INTO `correos` (`id_correo`, `correo`, `id_origen`, `id_grupo`, `habilitado`) VALUES
-(1, 'diego.rodriguez@tiendapaq.com.mx', 1, 1, 'true'),
-(2, 'luis.macias@tiendapaq.com.mx', 2, 2, 'true');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -56,15 +48,7 @@ CREATE TABLE IF NOT EXISTS `grupos` (
   `grupo` varchar(50) NOT NULL,
   PRIMARY KEY (`id_grupo`),
   KEY `grupo` (`grupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Volcado de datos para la tabla `grupos`
---
-
-INSERT INTO `grupos` (`id_grupo`, `grupo`) VALUES
-(2, 'DISTRIBUIDORES'),
-(1, 'EMPACADORAS');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -77,15 +61,7 @@ CREATE TABLE IF NOT EXISTS `origenes` (
   `origen` varchar(50) NOT NULL,
   PRIMARY KEY (`id_origen`),
   KEY `origen` (`origen`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Volcado de datos para la tabla `origenes`
---
-
-INSERT INTO `origenes` (`id_origen`, `origen`) VALUES
-(1, 'OUTLOOK'),
-(2, 'SERVINET');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Restricciones para tablas volcadas
