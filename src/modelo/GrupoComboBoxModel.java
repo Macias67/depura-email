@@ -19,11 +19,10 @@ public class GrupoComboBoxModel {
     private static GrupoComboBoxModel instance;
     private final MysqlConnect conexion;
     private DefaultComboBoxModel cbmodel;
-    private final ArrayList lista;
+    private ArrayList lista;
 
     private GrupoComboBoxModel() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.conexion = MysqlConnect.getConnection();
-        lista = new ArrayList();
     }
 
     public static GrupoComboBoxModel getInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
@@ -40,16 +39,24 @@ public class GrupoComboBoxModel {
     public void setDataComboBoxModel() throws SQLException {
         String query = "SELECT `grupo` FROM " + NombreTablas.GRUPOS.getValue() + "";
         ResultSet resultado = this.conexion.executeQuery(query);
+        
+        lista = new ArrayList();
+        
         while (resultado.next()) {
             lista.add(resultado.getString("grupo"));
         }
+        
+        String[] array;
+     
         if (lista.size() > 0) {
-            String[] array = new String[lista.size()];
+            array = new String[lista.size()];
             for (int i = 0; i < lista.size(); i++) {
                 array[i] = (String) lista.get(i);
             }
-            cbmodel = new DefaultComboBoxModel(array);
+        } else {
+            array = new String[]{""};
         }
+        cbmodel = new DefaultComboBoxModel(array);
     }
 
 }
