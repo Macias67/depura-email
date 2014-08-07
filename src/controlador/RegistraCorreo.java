@@ -34,7 +34,6 @@ public class RegistraCorreo {
             int cont_nuevos=0;
             int cont_repetidos=0;
             
-            
             while ((linea=leer_archivo.readLine())!=null) {
                 
                 linea=linea.trim();
@@ -46,7 +45,7 @@ public class RegistraCorreo {
                 //si la consulta regreso true, es porque encontro el correo y esta repetido
                 if(respuesta.next()){
                     cont_repetidos++;
-                    System.out.println("Correos repetidos: "+cont_repetidos+" = "+linea);
+                    System.err.println("Correos repetidos: "+cont_repetidos+" = "+linea);
                     band=true;
                 }else{
                     //SI NO SE CENCUENTRA REPETIDO LO INSERTAMOS
