@@ -22,6 +22,7 @@ public class Principal extends javax.swing.JFrame {
      */
     private Principal() {
         initComponents();
+        this.setTitle("DEPURADOR DE CORREOS - TIENDAPAQ");
     }
 
     /**

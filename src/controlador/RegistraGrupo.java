@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import modelo.Grupo;
 import modelo.MysqlConnect;
 import modelo.NombreTablas;
-import modelo.Origen;
 
 /**
  *

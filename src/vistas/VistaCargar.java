@@ -22,6 +22,8 @@ public class VistaCargar extends javax.swing.JDialog {
     private AddOrigen vistaAddOrigen;
     private AddGrupo vistaAddGrupo;
     private String rutaArchivo;
+    public static int correosNuevos;
+    public static int correosRepetidos;
 
     /**
      * Creates new form Principal
@@ -219,7 +221,7 @@ public class VistaCargar extends javax.swing.JDialog {
                 
                 if(registraCoreo.guardarCorreos()){
                     tfArchivo.setText("");
-                    JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos \r\n Correos nuevos: "+correosNuevos+"\r\n Correos repetidos: "+correosRepetidos, "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
                 }else{
                     JOptionPane.showMessageDialog(this, "ERROR: No se guardaron tus correos :/ ", "Error", JOptionPane.ERROR_MESSAGE);
                 }
