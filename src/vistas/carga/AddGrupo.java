@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Grupo;
+import modelo.GrupoComboBoxModel;
+import vistas.VistaCargar;
 
 /**
  *
@@ -115,6 +117,9 @@ public class AddGrupo extends javax.swing.JDialog {
 
                 if (registraGrupo.guardarGrupo()) {
                     tfGrupo.setText("");
+                    GrupoComboBoxModel instance =GrupoComboBoxModel.getInstance();
+                    instance.setDataComboBoxModel();
+                    VistaCargar.grupo_select.setModel(instance.getCbmodel());
                     JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de grupos.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);

@@ -26,7 +26,6 @@ public class RegistraGrupo {
 
     public boolean guardarGrupo() throws SQLException {
         String query = "INSERT INTO `" + NombreTablas.GRUPOS.getValue() + "` (`grupo`) VALUES ('" + this.grupo.getNombre() + "')";
-        System.out.println(query);
         int resp = this.conexion.executeUpdate(query);
         return (resp == 1);
     }

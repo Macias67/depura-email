@@ -8,6 +8,10 @@ package vistas;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.GrupoComboBoxModel;
 import vistas.carga.AddGrupo;
 import vistas.carga.AddOrigen;
 
@@ -16,6 +20,8 @@ import vistas.carga.AddOrigen;
  * @author Luis Macias | Diego Rodriguez
  */
 public class VistaCargar extends javax.swing.JDialog {
+    
+    private GrupoComboBoxModel comboBoxModel;
     
     private AddOrigen vistaAddOrigen;
     private AddGrupo vistaAddGrupo;
@@ -29,7 +35,17 @@ public class VistaCargar extends javax.swing.JDialog {
     public VistaCargar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
+        init();
+    }
+    
+    public void init() {
+        try {
+            comboBoxModel = GrupoComboBoxModel.getInstance();
+            comboBoxModel.setDataComboBoxModel();
+            grupo_select.setModel(comboBoxModel.getCbmodel());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -261,12 +277,12 @@ public class VistaCargar extends javax.swing.JDialog {
     private javax.swing.JButton AddGrupo_btn;
     private javax.swing.JButton AddOrigen_btn;
     private javax.swing.JTextField archivo_txt;
-    private javax.swing.JComboBox grupo_select;
+    public static javax.swing.JComboBox grupo_select;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JComboBox origen_select;
+    public static javax.swing.JComboBox origen_select;
     private javax.swing.JButton procesar_archivo_btn;
     private javax.swing.JButton seleccionar_btn;
     // End of variables declaration//GEN-END:variables
