@@ -11,7 +11,8 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.GrupoComboBoxModel;
+import modelo.MyComboBoxModel;
+import modelo.NombreTablas;
 import vistas.carga.AddGrupo;
 import vistas.carga.AddOrigen;
 
@@ -21,7 +22,7 @@ import vistas.carga.AddOrigen;
  */
 public class VistaCargar extends javax.swing.JDialog {
     
-    private GrupoComboBoxModel comboBoxModel;
+    private MyComboBoxModel comboBoxModel;
     
     private AddOrigen vistaAddOrigen;
     private AddGrupo vistaAddGrupo;
@@ -38,11 +39,11 @@ public class VistaCargar extends javax.swing.JDialog {
         init();
     }
     
-    public void init() {
+    private void init() {
         try {
-            comboBoxModel = GrupoComboBoxModel.getInstance();
-            comboBoxModel.setDataComboBoxModel();
-            grupo_select.setModel(comboBoxModel.getCbmodel());
+            comboBoxModel = MyComboBoxModel.getInstance();
+            origen_select.setModel(comboBoxModel.getCbmodel(NombreTablas.ORIGENES));
+            grupo_select.setModel(comboBoxModel.getCbmodel(NombreTablas.GRUPOS));
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,8 +110,6 @@ public class VistaCargar extends javax.swing.JDialog {
                 AddGrupo_btnActionPerformed(evt);
             }
         });
-
-        grupo_select.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         procesar_archivo_btn.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         procesar_archivo_btn.setText("Procesar archivo");
@@ -189,15 +188,15 @@ public class VistaCargar extends javax.swing.JDialog {
 
     private void AddOrigen_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddOrigen_btnActionPerformed
         // TODO add your handling code here:
-        vistaAddOrigen = new AddOrigen(Principal.getInstance(), true);
-        vistaAddOrigen.setLocationRelativeTo(this);
+        vistaAddOrigen = new AddOrigen(null, true);
+        vistaAddOrigen.setLocationRelativeTo(null);
         vistaAddOrigen.setVisible(true);
     }//GEN-LAST:event_AddOrigen_btnActionPerformed
 
     private void AddGrupo_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddGrupo_btnActionPerformed
         // TODO add your handling code here:
-        vistaAddGrupo = new AddGrupo(Principal.getInstance(), true);
-        vistaAddGrupo.setLocationRelativeTo(this);
+        vistaAddGrupo = new AddGrupo(null, true);
+        vistaAddGrupo.setLocationRelativeTo(null);
         vistaAddGrupo.setVisible(true);
     }//GEN-LAST:event_AddGrupo_btnActionPerformed
 

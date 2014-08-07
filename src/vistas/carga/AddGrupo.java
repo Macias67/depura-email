@@ -11,9 +11,13 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import modelo.Grupo;
-import modelo.GrupoComboBoxModel;
+import modelo.MyComboBoxModel;
+import modelo.NombreTablas;
+import vistas.Principal;
 import vistas.VistaCargar;
+import vistas.VistaEditar;
 
 /**
  *
@@ -117,9 +121,11 @@ public class AddGrupo extends javax.swing.JDialog {
 
                 if (registraGrupo.guardarGrupo()) {
                     tfGrupo.setText("");
-                    GrupoComboBoxModel instance =GrupoComboBoxModel.getInstance();
-                    instance.setDataComboBoxModel();
-                    VistaCargar.grupo_select.setModel(instance.getCbmodel());
+                    MyComboBoxModel instance =MyComboBoxModel.getInstance();
+                    // Actualizo en los combobox
+                    VistaCargar.grupo_select.setModel(instance.getCbmodel(NombreTablas.GRUPOS));
+                    Principal.grupo_select.setModel(instance.getCbmodel(NombreTablas.GRUPOS));
+                    
                     JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de grupos.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);

@@ -5,6 +5,12 @@
  */
 package vistas;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.MyComboBoxModel;
+import modelo.NombreTablas;
+
 /**
  *
  * @author Macias
@@ -12,6 +18,8 @@ package vistas;
 public class Principal extends javax.swing.JFrame {
 
     private static Principal instance;
+    
+    private MyComboBoxModel comboBoxModel;
 
     private VistaCargar vistaCargar;
     private VistaEditar vistaEditar;
@@ -22,6 +30,17 @@ public class Principal extends javax.swing.JFrame {
      */
     private Principal() {
         initComponents();
+        init();
+    }
+    
+    private void init() {
+        try {
+            comboBoxModel = MyComboBoxModel.getInstance();
+            origen_select.setModel(comboBoxModel.getCbmodel(NombreTablas.ORIGENES));
+            grupo_select.setModel(comboBoxModel.getCbmodel(NombreTablas.GRUPOS));
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -77,8 +96,6 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel2.setText("Grupo:");
-
-        grupo_select.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         habilitado_cbx.setText("Inabilitados");
         habilitado_cbx.addActionListener(new java.awt.event.ActionListener() {
@@ -302,7 +319,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscar_btn;
     private javax.swing.JTextField correo_txt;
-    private javax.swing.JComboBox grupo_select;
+    public static javax.swing.JComboBox grupo_select;
     private javax.swing.JCheckBox habilitado_cbx;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -319,6 +336,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_editar;
     private javax.swing.JMenuItem menu_eliminar;
     private javax.swing.JMenuItem menu_importar;
-    private javax.swing.JComboBox origen_select;
+    public static javax.swing.JComboBox origen_select;
     // End of variables declaration//GEN-END:variables
 }

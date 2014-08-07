@@ -11,7 +11,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.MyComboBoxModel;
+import modelo.NombreTablas;
 import modelo.Origen;
+import vistas.Principal;
+import vistas.VistaCargar;
 
 /**
  *
@@ -107,25 +111,30 @@ public class AddOrigen extends javax.swing.JDialog {
         // TODO add your handling code here:
         String nombre = StringValidation.validaTexto(tfOrigen.getText());
         if (nombre != null) {
-            
+
             try {
-                
+
                 Origen origen = new Origen(nombre);
                 RegistraOrigen registraOrigen = new RegistraOrigen(origen);
-                
+
                 if (registraOrigen.guardarOrigen()) {
                     tfOrigen.setText("");
+                    MyComboBoxModel instance = MyComboBoxModel.getInstance();
+                    // Actualizo en los combobox
+                    VistaCargar.origen_select.setModel(instance.getCbmodel(NombreTablas.ORIGENES));
+                    Principal.origen_select.setModel(instance.getCbmodel(NombreTablas.ORIGENES));
+
                     JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de origenes.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
-                    
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
                 }
-                
+
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
                 Logger.getLogger(AddGrupo.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "ERROR: "+ex.getMessage()+".", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "ERROR: " + ex.getMessage() + ".", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(this, "Escriba un nombre", "Campo vacío", JOptionPane.ERROR_MESSAGE);
         }

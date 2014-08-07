@@ -6,19 +6,40 @@
 
 package vistas;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.MyComboBoxModel;
+import modelo.NombreTablas;
+import static vistas.VistaCargar.grupo_select;
+
 /**
  *
  * @author Macias
  */
 public class VistaEditar extends javax.swing.JDialog {
+    
+    private MyComboBoxModel comboBoxModel;
 
     /**
      * Creates new form VistaEditar
+     * @param parent
+     * @param modal
      */
     public VistaEditar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
+        init();
+    }
+    
+    private void init() {
+        try {
+            comboBoxModel = MyComboBoxModel.getInstance();
+            grupo_select.setModel(comboBoxModel.getCbmodel(NombreTablas.GRUPOS));
+            origen_select.setModel(comboBoxModel.getCbmodel(NombreTablas.ORIGENES));
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
