@@ -104,8 +104,6 @@ public class VistaCargar extends javax.swing.JDialog {
             }
         });
 
-        selectOrigen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnAddGrupo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAddGrupo.setText("+");
         btnAddGrupo.setMargin(new java.awt.Insets(2, 5, 2, 5));
