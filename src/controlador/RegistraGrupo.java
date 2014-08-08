@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import modelo.Grupo;
 import modelo.MysqlConnect;
@@ -22,6 +23,13 @@ public class RegistraGrupo {
     public RegistraGrupo(Grupo grupo) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.grupo = grupo;
         this.conexion = MysqlConnect.getConnection();
+    }
+    
+    public boolean checarGrupo(Grupo grupo) throws SQLException{
+        String query = "SELECT * FROM `"+NombreTablas.GRUPOS.getValue()+"` where `grupo`='"+grupo.getNombre()+"'";
+        ResultSet respuesta = this.conexion.executeQuery(query);
+        
+        return (respuesta.next());
     }
 
     public boolean guardarGrupo() throws SQLException {

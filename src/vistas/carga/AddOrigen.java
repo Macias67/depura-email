@@ -51,7 +51,7 @@ public class AddOrigen extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agruegar Origen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agregar Origen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("Nombre:");
@@ -104,6 +104,8 @@ public class AddOrigen extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.getAccessibleContext().setAccessibleName("Agregar Origen");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -117,17 +119,23 @@ public class AddOrigen extends javax.swing.JDialog {
                 Origen origen = new Origen(nombre);
                 RegistraOrigen registraOrigen = new RegistraOrigen(origen);
 
-                if (registraOrigen.guardarOrigen()) {
+                if (registraOrigen.checarOrigen(origen)) {
                     tfOrigen.setText("");
-                    MyComboBoxModel instance = MyComboBoxModel.getInstance();
-                    // Actualizo en los combobox
-                    VistaCargar.origen_select.setModel(instance.getCbmodel(NombreTablas.ORIGENES));
-                    Principal.origen_select.setModel(instance.getCbmodel(NombreTablas.ORIGENES));
-
-                    JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de origenes.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
-
+                    JOptionPane.showMessageDialog(this, "El origen " + origen.getNombre() + " ya esta registrado!", "Problemas.", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
+                    if (registraOrigen.guardarOrigen()) {
+                        tfOrigen.setText("");
+                        
+                        MyComboBoxModel instance = MyComboBoxModel.getInstance();
+                        // Actualizo en los combobox
+                        VistaCargar.selectOrigen.setModel(instance.getCbmodel(NombreTablas.ORIGENES));
+                        Principal.selectOrigen.setModel(instance.getCbmodel(NombreTablas.ORIGENES));
+                        
+                        JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de origenes.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
 
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {

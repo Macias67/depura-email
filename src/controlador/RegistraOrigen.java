@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import modelo.MysqlConnect;
 import modelo.NombreTablas;
@@ -22,6 +23,13 @@ public class RegistraOrigen {
     public RegistraOrigen(Origen origen) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.origen = origen;
         this.conexion = MysqlConnect.getConnection();
+    }
+    
+    public boolean checarOrigen(Origen origen) throws SQLException{
+        String query = "SELECT * FROM `"+NombreTablas.ORIGENES.getValue()+"` where `origen`='"+origen.getNombre()+"'";
+        ResultSet respuesta = this.conexion.executeQuery(query);
+        
+        return (respuesta.next());
     }
     
     public boolean guardarOrigen() throws SQLException {

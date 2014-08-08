@@ -11,13 +11,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import modelo.Grupo;
 import modelo.MyComboBoxModel;
 import modelo.NombreTablas;
 import vistas.Principal;
 import vistas.VistaCargar;
-import vistas.VistaEditar;
 
 /**
  *
@@ -53,7 +51,7 @@ public class AddGrupo extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agruegar Grupo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Agregar Grupo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("Nombre:");
@@ -119,18 +117,25 @@ public class AddGrupo extends javax.swing.JDialog {
                 Grupo grupo = new Grupo(nombre);
                 RegistraGrupo registraGrupo = new RegistraGrupo(grupo);
 
-                if (registraGrupo.guardarGrupo()) {
+                if (registraGrupo.checarGrupo(grupo)) {
                     tfGrupo.setText("");
-                    MyComboBoxModel instance =MyComboBoxModel.getInstance();
-                    // Actualizo en los combobox
-                    VistaCargar.grupo_select.setModel(instance.getCbmodel(NombreTablas.GRUPOS));
-                    Principal.grupo_select.setModel(instance.getCbmodel(NombreTablas.GRUPOS));
-                    
-                    JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de grupos.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "El grupo " + grupo.getNombre() + " ya esta registrado!", "Problemas.", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
-                }
+                    if (registraGrupo.guardarGrupo()) {
+                        tfGrupo.setText("");
+                        
+                        MyComboBoxModel instance = MyComboBoxModel.getInstance();
+                        // Actualizo en los combobox
+                        VistaCargar.selectGrupo.setModel(instance.getCbmodel(NombreTablas.GRUPOS));
+                        Principal.selectGrupo.setModel(instance.getCbmodel(NombreTablas.GRUPOS));
+                        
+                        JOptionPane.showMessageDialog(this, "La palabra '" + nombre + "' se agrego a la lista de grupos.", "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
 
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Algo mal sucedió X_x", "Problemas.", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+                
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
                 Logger.getLogger(AddGrupo.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "ERROR: " + ex.getMessage() + ".", "Error", JOptionPane.ERROR_MESSAGE);

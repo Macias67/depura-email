@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.MyComboBoxModel;
 import modelo.NombreTablas;
-import static vistas.VistaCargar.grupo_select;
 
 /**
  *

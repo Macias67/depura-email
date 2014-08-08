@@ -12,7 +12,6 @@ import modelo.MyComboBoxModel;
 import modelo.NombreTablas;
 
 /**
- *
  * @author Macias
  */
 public class Principal extends javax.swing.JFrame {
@@ -36,8 +35,8 @@ public class Principal extends javax.swing.JFrame {
     private void init() {
         try {
             comboBoxModel = MyComboBoxModel.getInstance();
-            origen_select.setModel(comboBoxModel.getCbmodel(NombreTablas.ORIGENES));
-            grupo_select.setModel(comboBoxModel.getCbmodel(NombreTablas.GRUPOS));
+            selectOrigen.setModel(comboBoxModel.getCbmodel(NombreTablas.ORIGENES));
+            selectGrupo.setModel(comboBoxModel.getCbmodel(NombreTablas.GRUPOS));
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,9 +64,9 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        origen_select = new javax.swing.JComboBox();
+        selectOrigen = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        grupo_select = new javax.swing.JComboBox();
+        selectGrupo = new javax.swing.JComboBox();
         habilitado_cbx = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         correo_txt = new javax.swing.JTextField();
@@ -92,7 +91,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel1.setText("Origen:");
 
-        origen_select.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectOrigen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel2.setText("Grupo:");
@@ -127,7 +126,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(origen_select, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(selectOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,7 +134,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(0, 313, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(grupo_select, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(habilitado_cbx, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
                         .addContainerGap())
@@ -145,7 +144,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(correo_txt)))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {grupo_select, origen_select});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {selectGrupo, selectOrigen});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,8 +158,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(origen_select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(grupo_select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(habilitado_cbx))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -319,7 +318,6 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscar_btn;
     private javax.swing.JTextField correo_txt;
-    public static javax.swing.JComboBox grupo_select;
     private javax.swing.JCheckBox habilitado_cbx;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -336,6 +334,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_editar;
     private javax.swing.JMenuItem menu_eliminar;
     private javax.swing.JMenuItem menu_importar;
-    public static javax.swing.JComboBox origen_select;
+    public static javax.swing.JComboBox selectGrupo;
+    public static javax.swing.JComboBox selectOrigen;
     // End of variables declaration//GEN-END:variables
 }

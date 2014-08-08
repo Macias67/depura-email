@@ -126,7 +126,7 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="origen_select" linkSize="1" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="selectOrigen" linkSize="1" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -136,7 +136,7 @@
                                   <EmptySpace min="0" pref="313" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="grupo_select" linkSize="1" min="-2" pref="250" max="-2" attributes="0"/>
+                                  <Component id="selectGrupo" linkSize="1" min="-2" pref="250" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="habilitado_cbx" pref="90" max="32767" attributes="0"/>
                               </Group>
@@ -165,8 +165,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="origen_select" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="grupo_select" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="selectOrigen" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="selectGrupo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="habilitado_cbx" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
@@ -188,7 +188,7 @@
             <Property name="text" type="java.lang.String" value="Origen:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="origen_select">
+        <Component class="javax.swing.JComboBox" name="selectOrigen">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -211,7 +211,7 @@
             <Property name="text" type="java.lang.String" value="Grupo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="grupo_select">
+        <Component class="javax.swing.JComboBox" name="selectGrupo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
