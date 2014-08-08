@@ -224,23 +224,30 @@ public class VistaCargar extends javax.swing.JDialog {
 
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarActionPerformed
        //revision de que hay un archivo seleccionado
+        
         if(tfArchivo.getText().equals("")){
             JOptionPane.showMessageDialog(this, "No ha seleccionado nungun archivo!", "Problemas.", JOptionPane.WARNING_MESSAGE);
         }else{
-            try {
-                rutaArchivo=tfArchivo.getText();
-                RegistraCorreo registraCoreo = new RegistraCorreo(rutaArchivo);
+            if(selectOrigen.getSelectedItem().equals("") || selectGrupo.getSelectedItem().equals("")){
+                JOptionPane.showMessageDialog(this, "Se necesita un origen y un destino, por favor registralos", "Problemas.", JOptionPane.WARNING_MESSAGE);
+            }else{
+                try {
+                    rutaArchivo=tfArchivo.getText();
+                    RegistraCorreo registraCoreo = new RegistraCorreo();
+
+                    if(registraCoreo.guardarCorreos(rutaArchivo, selectOrigen.getSelectedItem().toString(), selectGrupo.getSelectedItem().toString())){
+                        tfArchivo.setText("");
+                        JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos \r\n Correos nuevos: "+correosNuevos+"\r\n Correos repetidos: "+correosRepetidos, "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(this, "ERROR: No se guardaron tus correos :/ ", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "ERROR: "+e+".", "Error", JOptionPane.ERROR_MESSAGE);
+                }   
                 
-                if(registraCoreo.guardarCorreos()){
-                    tfArchivo.setText("");
-                    JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos \r\n Correos nuevos: "+correosNuevos+"\r\n Correos repetidos: "+correosRepetidos, "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
-                }else{
-                    JOptionPane.showMessageDialog(this, "ERROR: No se guardaron tus correos :/ ", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "ERROR: "+e+".", "Error", JOptionPane.ERROR_MESSAGE);
-            }   
+            }
         }
+        
     }//GEN-LAST:event_btnProcesarActionPerformed
 
     /**www.h

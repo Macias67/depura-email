@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import modelo.MysqlConnect;
 import modelo.NombreTablas;
 import vistas.VistaCargar;
@@ -16,23 +17,20 @@ import vistas.VistaCargar;
 public class RegistraCorreo {
     
     private final MysqlConnect conexion;
-    private final String ruta;
     
-    public RegistraCorreo(String ruta) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        this.ruta= ruta;
+    public RegistraCorreo() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.conexion = MysqlConnect.getConnection();
     }
     
-    public boolean guardarCorreos() throws SQLException{
+    public boolean guardarCorreos(String ruta, String origen, String grupo) throws SQLException{
         //System.out.println("Recibi la ruta: "+this.ruta);
         boolean band=false;
         
         try {
             
-            BufferedReader leer_archivo = new BufferedReader(new FileReader(this.ruta));
-            
-            ResultSet resp_origen = this.conexion.executeQuery("SELECT id_origen FROM "+NombreTablas.ORIGENES.getValue()+" where `origen` = '"+VistaCargar.selectOrigen.getSelectedItem()+"'");
-            ResultSet resp_grupo = this.conexion.executeQuery("SELECT id_grupo FROM "+NombreTablas.GRUPOS.getValue()+" where `grupo` = '"+VistaCargar.selectGrupo.getSelectedItem()+"'");
+            BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta));
+            ResultSet resp_origen = this.conexion.executeQuery("SELECT id_origen FROM "+NombreTablas.ORIGENES.getValue()+" where `origen` = '"+origen+"'");
+            ResultSet resp_grupo = this.conexion.executeQuery("SELECT id_grupo FROM "+NombreTablas.GRUPOS.getValue()+" where `grupo` = '"+grupo+"'");
             resp_grupo.next();
             resp_origen.next();
             
@@ -67,9 +65,9 @@ public class RegistraCorreo {
             band=true;
             vistas.VistaCargar.correosNuevos=cont_nuevos;
             vistas.VistaCargar.correosRepetidos=cont_repetidos;
-            System.out.println("Correos nuevos: "+cont_nuevos+" - Correos repetidos: "+cont_repetidos);
+            //System.out.println("Correos nuevos: "+cont_nuevos+" - Correos repetidos: "+cont_repetidos);
         } catch (IOException e) {
-            System.out.println("Error : "+e);
+            JOptionPane.showMessageDialog(null, "ERROR: "+e+".", "Error", JOptionPane.ERROR_MESSAGE);
             band=false;
         }
         
