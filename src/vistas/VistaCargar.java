@@ -18,7 +18,6 @@ import vistas.carga.AddGrupo;
 import vistas.carga.AddOrigen;
 
 /**
- *
  * @author Luis Macias | Diego Rodriguez
  */
 public class VistaCargar extends javax.swing.JDialog {
@@ -73,6 +72,7 @@ public class VistaCargar extends javax.swing.JDialog {
         btnAddGrupo = new javax.swing.JButton();
         selectGrupo = new javax.swing.JComboBox();
         btnProcesar = new javax.swing.JButton();
+        cbxHabilitado = new javax.swing.JCheckBox();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargar TXT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -121,6 +121,9 @@ public class VistaCargar extends javax.swing.JDialog {
             }
         });
 
+        cbxHabilitado.setSelected(true);
+        cbxHabilitado.setText("Habilitados");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -144,7 +147,8 @@ public class VistaCargar extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAddGrupo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxHabilitado))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -168,9 +172,10 @@ public class VistaCargar extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddGrupo)
                     .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(cbxHabilitado)
                 .addGap(18, 18, 18)
-                .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,8 +191,8 @@ public class VistaCargar extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -224,7 +229,6 @@ public class VistaCargar extends javax.swing.JDialog {
 
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarActionPerformed
        //revision de que hay un archivo seleccionado
-        
         if(tfArchivo.getText().equals("")){
             JOptionPane.showMessageDialog(this, "No ha seleccionado nungun archivo!", "Problemas.", JOptionPane.WARNING_MESSAGE);
         }else{
@@ -235,7 +239,7 @@ public class VistaCargar extends javax.swing.JDialog {
                     rutaArchivo=tfArchivo.getText();
                     RegistraCorreo registraCoreo = new RegistraCorreo();
 
-                    if(registraCoreo.guardarCorreos(rutaArchivo, selectOrigen.getSelectedItem().toString(), selectGrupo.getSelectedItem().toString())){
+                    if(registraCoreo.guardarCorreos(rutaArchivo, selectOrigen.getSelectedItem().toString(), selectGrupo.getSelectedItem().toString(), cbxHabilitado.isSelected())){
                         tfArchivo.setText("");
                         JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos \r\n Correos nuevos: "+correosNuevos+"\r\n Correos repetidos: "+correosRepetidos, "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
                     }else{
@@ -292,6 +296,7 @@ public class VistaCargar extends javax.swing.JDialog {
     private javax.swing.JButton btnAddOrigen;
     private javax.swing.JButton btnProcesar;
     private javax.swing.JButton btnSeleccionar;
+    private javax.swing.JCheckBox cbxHabilitado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

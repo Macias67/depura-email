@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.MysqlConnect;
 import modelo.NombreTablas;
-import vistas.VistaCargar;
 
 /**
  * @author Diego
@@ -22,9 +21,9 @@ public class RegistraCorreo {
         this.conexion = MysqlConnect.getConnection();
     }
     
-    public boolean guardarCorreos(String ruta, String origen, String grupo) throws SQLException{
+    public boolean guardarCorreos(String ruta, String origen, String grupo, boolean habilitado) throws SQLException{
         //System.out.println("Recibi la ruta: "+this.ruta);
-        boolean band=false;
+        boolean band;
         
         try {
             
@@ -53,7 +52,7 @@ public class RegistraCorreo {
                     //System.err.println("Correos repetidos: "+cont_repetidos+" = "+linea);
                 }else{
                     //SI NO SE CENCUENTRA REPETIDO LO INSERTAMOS
-                    String query = "INSERT INTO `"+NombreTablas.CORREOS.getValue()+"` (`correo`,`id_origen`,`id_grupo`,`habilitado`) VALUES ('"+linea+"','"+id_origen+"','"+id_grupo+"','"+true+"')";
+                    String query = "INSERT INTO `"+NombreTablas.CORREOS.getValue()+"` (`correo`,`id_origen`,`id_grupo`,`habilitado`) VALUES ('"+linea+"','"+id_origen+"','"+id_grupo+"','"+habilitado+"')";
                     this.conexion.executeUpdate(query);
                     cont_nuevos++;
                     //System.out.println("Correos nuevos: "+cont_nuevos+" = "+linea);

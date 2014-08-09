@@ -67,7 +67,7 @@ public class Principal extends javax.swing.JFrame {
         selectOrigen = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         selectGrupo = new javax.swing.JComboBox();
-        habilitado_cbx = new javax.swing.JCheckBox();
+        cbxHabilitado = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         correo_txt = new javax.swing.JTextField();
         buscar_btn = new javax.swing.JButton();
@@ -96,10 +96,10 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel2.setText("Grupo:");
 
-        habilitado_cbx.setText("Inabilitados");
-        habilitado_cbx.addActionListener(new java.awt.event.ActionListener() {
+        cbxHabilitado.setText("Inabilitados");
+        cbxHabilitado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                habilitado_cbxActionPerformed(evt);
+                cbxHabilitadoActionPerformed(evt);
             }
         });
 
@@ -136,7 +136,7 @@ public class Principal extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(habilitado_cbx, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
+                                .addComponent(cbxHabilitado, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -160,7 +160,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(selectOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(habilitado_cbx))
+                    .addComponent(cbxHabilitado))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buscar_btn)
@@ -275,13 +275,13 @@ public class Principal extends javax.swing.JFrame {
         vistaEliminar.setVisible(true);
     }//GEN-LAST:event_menu_eliminarActionPerformed
 
-    private void habilitado_cbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitado_cbxActionPerformed
-        if (habilitado_cbx.isSelected()) {
-            habilitado_cbx.setText("Habilitados");
+    private void cbxHabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxHabilitadoActionPerformed
+        if (cbxHabilitado.isSelected()) {
+            cbxHabilitado.setText("Habilitados");
         } else {
-            habilitado_cbx.setText("Inhabilitados");
+            cbxHabilitado.setText("Inhabilitados");
         }
-    }//GEN-LAST:event_habilitado_cbxActionPerformed
+    }//GEN-LAST:event_cbxHabilitadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -317,8 +317,8 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscar_btn;
+    private javax.swing.JCheckBox cbxHabilitado;
     private javax.swing.JTextField correo_txt;
-    private javax.swing.JCheckBox habilitado_cbx;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
