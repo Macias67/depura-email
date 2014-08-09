@@ -18,7 +18,11 @@ import modelo.NombreTablas;
 public class RegistraGrupo {
 
     private final MysqlConnect conexion;
-    private final Grupo grupo;
+    private Grupo grupo;
+
+    public RegistraGrupo() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+        this.conexion = MysqlConnect.getConnection();
+    }
 
     public RegistraGrupo(Grupo grupo) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.grupo = grupo;
@@ -37,4 +41,20 @@ public class RegistraGrupo {
         int resp = this.conexion.executeUpdate(query);
         return (resp == 1);
     }
+    
+    public Grupo getGrupoByID(int ID) throws SQLException {
+        String query = "SELECT * FROM `"+NombreTablas.GRUPOS.getValue()+"` WHERE `id_grupo` = "+ID+" LIMIT 1";
+        ResultSet respuesta = this.conexion.executeQuery(query);
+        
+        Grupo grupo = null;
+        
+        if (respuesta.next()) {
+            int id_grupo = respuesta.getInt("id_grupo");
+            String sgrupo = respuesta.getNString("grupo");
+            grupo = new Grupo(id_grupo, sgrupo);
+            return grupo;
+        } else {
+            return grupo;
+        }
+    } 
 }

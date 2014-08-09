@@ -6,8 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import modelo.Correo;
+import modelo.Grupo;
 import modelo.MysqlConnect;
 import modelo.NombreTablas;
+import modelo.Origen;
 
 /**
  * @author Diego
@@ -17,18 +20,17 @@ public class RegistraCorreo {
     private final MysqlConnect conexion;
     private String ruta;
     
-    public RegistraCorreo(String ruta) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        this.ruta= ruta;
+    public RegistraCorreo() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.conexion = MysqlConnect.getConnection();
     }
     
-    public boolean guardarCorreos() throws SQLException{
+    public boolean guardarCorreos(String ruta) throws SQLException{
         //System.out.println("Recibi la ruta: "+this.ruta);
         boolean band=false;
         
         try {
             
-            BufferedReader leer_archivo = new BufferedReader(new FileReader(this.ruta));
+            BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta));
             
             String linea="";
             int cont_nuevos=0;
@@ -49,7 +51,7 @@ public class RegistraCorreo {
                     band=true;
                 }else{
                     //SI NO SE CENCUENTRA REPETIDO LO INSERTAMOS
-                    String query = "INSERT INTO `"+NombreTablas.CORREOS.getValue()+"` (`correo`,`id_origen`,`id_grupo`,`habilitado`) VALUES ('"+linea+"','"+1+"','"+2+"','"+true+"')";
+                    String query = "INSERT INTO `"+NombreTablas.CORREOS.getValue()+"` (`correo`,`id_origen`,`id_grupo`,`habilitado`) VALUES ('"+linea+"','"+1+"','"+1+"','"+true+"')";
                     int resp = this.conexion.executeUpdate(query);
                 
                     if(resp==1){
@@ -78,5 +80,25 @@ public class RegistraCorreo {
         }
         
         return (band);
+    }
+    
+    public Correo getCorreoByID(String ID) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String query = "SELECT * FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `id_correo` = "+ID+" LIMIT 1";
+        ResultSet respuesta = this.conexion.executeQuery(query);
+                
+        if (respuesta.next()) {
+            int id = respuesta.getInt("id_correo");
+            String scorreo = respuesta.getNString("correo");
+            int id_origen = respuesta.getInt("id_origen");
+            int id_grupo = respuesta.getInt("id_grupo");
+            boolean habilitado = Boolean.parseBoolean(respuesta.getNString("habilitado"));
+            
+            Origen origen = new RegistraOrigen().getOrigenByID(id_origen);
+            Grupo grupo = new RegistraGrupo().getGrupoByID(id_grupo);
+            
+            return new Correo(id, scorreo, origen, grupo, habilitado);
+        } else {
+            return null;
+        }
     }
 }

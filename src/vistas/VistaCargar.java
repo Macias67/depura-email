@@ -231,9 +231,9 @@ public class VistaCargar extends javax.swing.JDialog {
         }else{
             try {
                 rutaArchivo=tfArchivo.getText();
-                RegistraCorreo registraCoreo = new RegistraCorreo(rutaArchivo);
+                RegistraCorreo registraCoreo = new RegistraCorreo();
                 
-                if(registraCoreo.guardarCorreos()){
+                if(registraCoreo.guardarCorreos(rutaArchivo)){
                     tfArchivo.setText("");
                     JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos \r\n Correos nuevos: "+correosNuevos+"\r\n Correos repetidos: "+correosRepetidos, "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
                 }else{

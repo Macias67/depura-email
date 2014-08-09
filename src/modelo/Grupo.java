@@ -12,12 +12,26 @@ package modelo;
  */
 public class Grupo {
     
+    private int id;
     private String nombre;
     
     public Grupo() {}
 
     public Grupo(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Grupo(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
      
     public String getNombre() {

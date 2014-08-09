@@ -62,6 +62,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         selectOrigen = new javax.swing.JComboBox();
@@ -79,9 +80,12 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menu_importar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        menu_editar = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        menuItemCorreos = new javax.swing.JMenuItem();
         menu_eliminar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -206,13 +210,17 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.setText("Gestionar");
 
-        menu_editar.setText("Editar");
-        menu_editar.addActionListener(new java.awt.event.ActionListener() {
+        jMenu4.setText("Editar");
+
+        menuItemCorreos.setText("Correos");
+        menuItemCorreos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_editarActionPerformed(evt);
+                menuItemCorreosActionPerformed(evt);
             }
         });
-        jMenu2.add(menu_editar);
+        jMenu4.add(menuItemCorreos);
+
+        jMenu2.add(jMenu4);
 
         menu_eliminar.setText("Eliminar");
         menu_eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -263,12 +271,6 @@ public class Principal extends javax.swing.JFrame {
         vistaCargar.setVisible(true);
     }//GEN-LAST:event_menu_importarActionPerformed
 
-    private void menu_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_editarActionPerformed
-        vistaEditar = new VistaEditar(this, true);
-        vistaEditar.setLocationRelativeTo(this);
-        vistaEditar.setVisible(true);
-    }//GEN-LAST:event_menu_editarActionPerformed
-
     private void menu_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_eliminarActionPerformed
         vistaEliminar = new VistaEliminar(this, true);
         vistaEliminar.setLocationRelativeTo(this);
@@ -282,6 +284,13 @@ public class Principal extends javax.swing.JFrame {
             habilitado_cbx.setText("Inhabilitados");
         }
     }//GEN-LAST:event_habilitado_cbxActionPerformed
+
+    private void menuItemCorreosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCorreosActionPerformed
+        // TODO add your handling code here:
+        vistaEditar = new VistaEditar(this, true);
+        vistaEditar.setLocationRelativeTo(this);
+        vistaEditar.setVisible(true);
+    }//GEN-LAST:event_menuItemCorreosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,13 +334,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton limpiar_btn;
-    private javax.swing.JMenuItem menu_editar;
+    private javax.swing.JMenuItem menuItemCorreos;
     private javax.swing.JMenuItem menu_eliminar;
     private javax.swing.JMenuItem menu_importar;
     public static javax.swing.JComboBox selectGrupo;

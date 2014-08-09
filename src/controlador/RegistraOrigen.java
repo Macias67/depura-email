@@ -18,7 +18,11 @@ import modelo.Origen;
 public class RegistraOrigen {
 
     private final MysqlConnect conexion;
-    private final Origen origen;
+    private Origen origen;
+
+    public RegistraOrigen() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+        this.conexion = MysqlConnect.getConnection();
+    }
 
     public RegistraOrigen(Origen origen) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.origen = origen;
@@ -36,5 +40,21 @@ public class RegistraOrigen {
         String query = "INSERT INTO `"+NombreTablas.ORIGENES.getValue()+"` (`origen`) VALUES ('"+this.origen.getNombre()+"')";
         int resp = this.conexion.executeUpdate(query);
         return (resp == 1);
+    }
+    
+    public Origen getOrigenByID(int ID) throws SQLException {
+        String query = "SELECT * FROM `"+NombreTablas.ORIGENES.getValue()+"` WHERE `id_origen` = "+ID+" LIMIT 1";
+        ResultSet respuesta = this.conexion.executeQuery(query);
+        
+        Origen origen = null;
+        
+        if (respuesta.next()) {
+            int id_origen = respuesta.getInt("id_origen");
+            String sorigen = respuesta.getNString("origen");
+            origen = new Origen(id_origen, sorigen);
+            return origen;
+        } else {
+            return origen;
+        }
     }
 }

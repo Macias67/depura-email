@@ -11,6 +11,7 @@ package modelo;
  */
 public class Origen {
 
+    private int id;
     private String nombre;
 
     public Origen() {
@@ -18,6 +19,19 @@ public class Origen {
 
     public Origen(String origen) {
         this.nombre = origen;
+    }
+
+    public Origen(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
