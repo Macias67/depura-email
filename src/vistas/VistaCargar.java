@@ -17,7 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import vistas.carga.AddGrupo;
 import vistas.carga.AddOrigen;
 
-/**
+/*
  * @author Luis Macias | Diego Rodriguez
  */
 public class VistaCargar extends javax.swing.JDialog {
@@ -27,8 +27,6 @@ public class VistaCargar extends javax.swing.JDialog {
     private AddOrigen vistaAddOrigen;
     private AddGrupo vistaAddGrupo;
     private String rutaArchivo;
-    public static int correosNuevos;
-    public static int correosRepetidos;
 
     /**
      * Creates new form Principal
@@ -238,13 +236,15 @@ public class VistaCargar extends javax.swing.JDialog {
                 try {
                     rutaArchivo=tfArchivo.getText();
                     RegistraCorreo registraCoreo = new RegistraCorreo();
-
-                    if(registraCoreo.guardarCorreos(rutaArchivo, selectOrigen.getSelectedItem().toString(), selectGrupo.getSelectedItem().toString(), cbxHabilitado.isSelected())){
-                        tfArchivo.setText("");
-                        JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos \r\n Correos nuevos: "+correosNuevos+"\r\n Correos repetidos: "+correosRepetidos, "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
-                    }else{
-                        JOptionPane.showMessageDialog(this, "ERROR: No se guardaron tus correos :/ ", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    registraCoreo.setConfig(rutaArchivo, selectOrigen.getSelectedItem().toString(), selectGrupo.getSelectedItem().toString(), cbxHabilitado.isSelected());
+                    
+                    //metodo correra un hilo guardando los correos
+                    Thread procesaCorreos = new Thread(registraCoreo);
+                    procesaCorreos.start();
+                    
+                    VistaLoading cargado = new VistaLoading(null, true);
+                    cargado.setVisible(true);
+                    
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "ERROR: "+e+".", "Error", JOptionPane.ERROR_MESSAGE);
                 }   
@@ -303,6 +303,6 @@ public class VistaCargar extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JComboBox selectGrupo;
     public static javax.swing.JComboBox selectOrigen;
-    private javax.swing.JTextField tfArchivo;
+    public static javax.swing.JTextField tfArchivo;
     // End of variables declaration//GEN-END:variables
 }
