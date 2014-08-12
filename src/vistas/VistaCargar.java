@@ -5,6 +5,7 @@
  */
 package vistas;
 
+import controlador.ProcesaTXT;
 import controlador.RegistraCorreo;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -21,13 +22,13 @@ import vistas.carga.AddOrigen;
  * @author Luis Macias | Diego Rodriguez
  */
 public class VistaCargar extends javax.swing.JDialog {
-    
+
     private MyComboBoxModel comboBoxModel;
-    
+
     private AddOrigen vistaAddOrigen;
     private AddGrupo vistaAddGrupo;
     private String rutaArchivo;
-    
+
     /**
      * Creates new form Principal
      *
@@ -39,7 +40,7 @@ public class VistaCargar extends javax.swing.JDialog {
         initComponents();
         init();
     }
-    
+
     private void init() {
         try {
             comboBoxModel = MyComboBoxModel.getInstance();
@@ -218,44 +219,44 @@ public class VistaCargar extends javax.swing.JDialog {
         //abrimos el explorador y esperamos la desicion el usuario y abre un archivo o si calcela
         int returnVal = explorador.showOpenDialog(this);
         //si abre un archivo
-        if(returnVal == JFileChooser.APPROVE_OPTION)
-        {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             //pintamos el nombre del archivo en el textfield por estetica
             tfArchivo.setText(explorador.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarActionPerformed
-       //revision de que hay un archivo seleccionado
-        if(tfArchivo.getText().equals("")){
+
+        String ruta = tfArchivo.getText();
+        String origen = (String) selectOrigen.getSelectedItem();
+        String grupo = (String) selectGrupo.getSelectedItem();
+
+        //revision de que hay un archivo seleccionado
+        if (ruta.equals("")) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado nungun archivo!", "Problemas.", JOptionPane.WARNING_MESSAGE);
-        }else{
-            if(selectOrigen.getSelectedItem().equals("") || selectGrupo.getSelectedItem().equals("")){
+        } else {
+            if (origen.equals("") || grupo.equals("")) {
                 JOptionPane.showMessageDialog(this, "Se necesita un origen y un destino, por favor registralos", "Problemas.", JOptionPane.WARNING_MESSAGE);
-            }else{
+            } else {
                 try {
-                    rutaArchivo=tfArchivo.getText();
-                    RegistraCorreo registraCoreo = new RegistraCorreo();
-                    registraCoreo.setConfig(rutaArchivo, selectOrigen.getSelectedItem().toString(), selectGrupo.getSelectedItem().toString(), cbxHabilitado.isSelected());
                     
-                    //metodo correra un hilo guardando los correos
-                    Thread procesaCorreos = new Thread(registraCoreo);
-                    procesaCorreos.start();
+                    ProcesaTXT procesaTXT = ProcesaTXT.getInstance();
+                    procesaTXT.setParametros(ruta, origen, grupo, cbxHabilitado.isSelected());
                     
-                    VistaLoading cargado = new VistaLoading(null, true);
-                    cargado.setLocationRelativeTo(this);
-                    cargado.setVisible(true);
+                    VistaLoading vistaLoading = new VistaLoading(null, true);
+                    vistaLoading.setLocationRelativeTo(null);
+                    vistaLoading.setVisible(true);
                     
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "ERROR: "+e+".", "Error", JOptionPane.ERROR_MESSAGE);
-                }   
-                
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+                    JOptionPane.showMessageDialog(this, "ERROR: " + e + ".", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
-        
     }//GEN-LAST:event_btnProcesarActionPerformed
 
-    /**www.h
+    /**
+     * www.h
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -304,6 +305,6 @@ public class VistaCargar extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JComboBox selectGrupo;
     public static javax.swing.JComboBox selectOrigen;
-    public static javax.swing.JTextField tfArchivo;
+    private javax.swing.JTextField tfArchivo;
     // End of variables declaration//GEN-END:variables
 }
