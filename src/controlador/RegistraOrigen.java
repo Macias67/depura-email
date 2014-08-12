@@ -28,33 +28,43 @@ public class RegistraOrigen {
         this.origen = origen;
         this.conexion = MysqlConnect.getConnection();
     }
-    
-    public boolean checarOrigen(Origen origen) throws SQLException{
-        String query = "SELECT * FROM `"+NombreTablas.ORIGENES.getValue()+"` where `origen`='"+origen.getNombre()+"'";
+
+    public boolean checarOrigen(Origen origen) throws SQLException {
+        String query = "SELECT * FROM `" + NombreTablas.ORIGENES.getValue() + "` where `origen`='" + origen.getNombre() + "'";
         ResultSet respuesta = this.conexion.executeQuery(query);
-        
+
         return (respuesta.next());
     }
-    
+
     public boolean guardarOrigen() throws SQLException {
-        String query = "INSERT INTO `"+NombreTablas.ORIGENES.getValue()+"` (`origen`) VALUES ('"+this.origen.getNombre()+"')";
+        String query = "INSERT INTO `" + NombreTablas.ORIGENES.getValue() + "` (`origen`) VALUES ('" + this.origen.getNombre() + "')";
         int resp = this.conexion.executeUpdate(query);
         return (resp == 1);
     }
-    
+
     public Origen getOrigenByID(int ID) throws SQLException {
-        String query = "SELECT * FROM `"+NombreTablas.ORIGENES.getValue()+"` WHERE `id_origen` = "+ID+" LIMIT 1";
+        String query = "SELECT * FROM `" + NombreTablas.ORIGENES.getValue() + "` WHERE `id_origen` = " + ID + " LIMIT 1";
         ResultSet respuesta = this.conexion.executeQuery(query);
-        
-        Origen origen = null;
-        
+
         if (respuesta.next()) {
             int id_origen = respuesta.getInt("id_origen");
             String sorigen = respuesta.getNString("origen");
-            origen = new Origen(id_origen, sorigen);
-            return origen;
+            return new Origen(id_origen, sorigen);
         } else {
-            return origen;
+            return null;
+        }
+    }
+
+    public Origen getOrigenByName(String nombre) throws SQLException {
+        String query = "SELECT * FROM `" + NombreTablas.ORIGENES.getValue() + "` WHERE `origen` = '" + nombre + "' LIMIT 1";
+        ResultSet respuesta = this.conexion.executeQuery(query);
+
+        if (respuesta.next()) {
+            int id_origen = respuesta.getInt("id_origen");
+            String sorigen = respuesta.getNString("origen");
+            return new Origen(id_origen, sorigen);
+        } else {
+            return null;
         }
     }
 }

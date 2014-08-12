@@ -26,6 +26,13 @@ public class Correo {
         this.habilitado = habilitado;
     }
 
+    public Correo(String nombre, Origen origen, Grupo grupo, boolean habilitado) {
+        this.nombre = nombre;
+        this.origen = origen;
+        this.grupo = grupo;
+        this.habilitado = habilitado;
+    }
+
     public int getId() {
         return id;
     }

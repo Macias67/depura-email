@@ -102,7 +102,7 @@ public class RegistraCorreo {
     }
 
     public Correo getCorreoByNombre(String nombre) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String query = "SELECT * FROM `" + NombreTablas.CORREOS.getValue() + "` WHERE `nombre` = " + nombre + " LIMIT 1";
+        String query = "SELECT * FROM `" + NombreTablas.CORREOS.getValue() + "` WHERE `correo` = '" + nombre + "' LIMIT 1";
         ResultSet respuesta = this.conexion.executeQuery(query);
 
         if (respuesta.next()) {
@@ -119,5 +119,17 @@ public class RegistraCorreo {
         } else {
             return null;
         }
+    }
+
+    public boolean editarCorreo(Correo actual, Correo nuevo) throws SQLException {
+        // Deshabilito el correo actual
+        String query = "UPDATE `" + NombreTablas.CORREOS.getValue() + "` SET `habilitado` = 'false' WHERE `id_correo` = " + actual.getId();
+        int update = this.conexion.executeUpdate(query);
+        // Inserto nuevo registro
+        query = "INSERT INTO `" + NombreTablas.CORREOS.getValue() + "` (`correo`,`id_origen`,`id_grupo`,`habilitado`) "
+                + "VALUES ('" + nuevo.getNombre() + "','" + nuevo.getOrigen().getId() + "','" + nuevo.getGrupo().getId() + "','" + nuevo.isHabilitado() + "')";
+        int insert = this.conexion.executeUpdate(query);
+        
+        return (update == 1 && insert == 1);
     }
 }

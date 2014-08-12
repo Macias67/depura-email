@@ -46,15 +46,25 @@ public class RegistraGrupo {
         String query = "SELECT * FROM `"+NombreTablas.GRUPOS.getValue()+"` WHERE `id_grupo` = "+ID+" LIMIT 1";
         ResultSet respuesta = this.conexion.executeQuery(query);
         
-        Grupo grupo = null;
+        if (respuesta.next()) {
+            int id_grupo = respuesta.getInt("id_grupo");
+            String sgrupo = respuesta.getNString("grupo");
+            return new Grupo(id_grupo, sgrupo);
+        } else {
+            return null;
+        }
+    }
+    
+    public Grupo getGrupoByName(String nombre) throws SQLException {
+        String query = "SELECT * FROM `"+NombreTablas.GRUPOS.getValue()+"` WHERE `grupo` = '"+nombre+"' LIMIT 1";
+        ResultSet respuesta = this.conexion.executeQuery(query);
         
         if (respuesta.next()) {
             int id_grupo = respuesta.getInt("id_grupo");
             String sgrupo = respuesta.getNString("grupo");
-            grupo = new Grupo(id_grupo, sgrupo);
-            return grupo;
+            return new Grupo(id_grupo, sgrupo);
         } else {
-            return grupo;
+            return null;
         }
-    } 
+    }
 }

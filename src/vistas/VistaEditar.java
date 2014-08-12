@@ -3,31 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vistas;
 
 import controlador.RegistraCorreo;
+import controlador.RegistraGrupo;
+import controlador.RegistraOrigen;
 import helper.StringValidation;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import modelo.Correo;
+import modelo.Grupo;
 import modelo.MyComboBoxModel;
 import modelo.NombreTablas;
+import modelo.Origen;
 
 /**
  *
  * @author Macias
  */
 public class VistaEditar extends javax.swing.JDialog {
-    
+
+    private Correo correoActual;
     private MyComboBoxModel comboBoxModel;
 
     /**
      * Creates new form VistaEditar
+     *
      * @param parent
      * @param modal
      */
@@ -36,7 +40,7 @@ public class VistaEditar extends javax.swing.JDialog {
         initComponents();
         init();
     }
-    
+
     private void init() {
         try {
             comboBoxModel = MyComboBoxModel.getInstance();
@@ -222,35 +226,33 @@ public class VistaEditar extends javax.swing.JDialog {
         // TODO add your handling code here:
         String textoCorreo = StringValidation.validaTexto(tfIdCorreo.getText());
         if (textoCorreo != null) {
-            
+
             try {
-                
-                Correo correo = null;
-                
+
                 if (rbtnCorreo.isSelected()) {
-                    correo = new RegistraCorreo().getCorreoByNombre(textoCorreo);
-                } else if(rbtnId.isSelected()) {
-                    
+                    correoActual = new RegistraCorreo().getCorreoByNombre(textoCorreo);
+                } else if (rbtnId.isSelected()) {
+
                     Pattern patron = Pattern.compile("[0-9]+");
-                    
+
                     if (patron.matcher(textoCorreo).matches()) {
-                        correo = new RegistraCorreo().getCorreoByID(textoCorreo);
+                        correoActual = new RegistraCorreo().getCorreoByID(textoCorreo);
                     } else {
                         JOptionPane.showMessageDialog(this, "Solo se aceptan dígitos como ID", "Escribe números", JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                
-                if (correo != null) {
-                    tfCorreo.setText(correo.getNombre());
-                    selectOrigen.setSelectedItem(correo.getOrigen().getNombre());
-                    selectGrupo.setSelectedItem(correo.getGrupo().getNombre());
-                    cbxHabilitado.setSelected(correo.isHabilitado());
+
+                if (correoActual != null) {
+                    tfCorreo.setText(correoActual.getNombre());
+                    selectOrigen.setSelectedItem(correoActual.getOrigen().getNombre());
+                    selectGrupo.setSelectedItem(correoActual.getGrupo().getNombre());
+                    cbxHabilitado.setSelected(correoActual.isHabilitado());
                 } else {
                     JOptionPane.showMessageDialog(this, "No existe correo con ese ID", "No existe correo", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                 Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Error: "+ex, "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: " + ex, "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Escriba un ID del correo", "Campo vacío", JOptionPane.ERROR_MESSAGE);
@@ -264,6 +266,29 @@ public class VistaEditar extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        String correo = tfCorreo.getText();
+        if (StringValidation.validaCorreo(correo)) {
+            try {
+                String sorigen = (String) selectOrigen.getSelectedItem();
+                String sgrupo = (String) selectGrupo.getSelectedItem();
+                boolean habilitado = cbxHabilitado.isSelected();
+                
+                RegistraCorreo registraCorreo = new RegistraCorreo();
+                
+                Origen origen = new RegistraOrigen().getOrigenByName(sorigen);
+                Grupo grupo = new RegistraGrupo().getGrupoByName(sgrupo);
+
+                Correo nuevo = new Correo(correo, origen, grupo, habilitado);
+
+                if (registraCorreo.editarCorreo(correoActual, nuevo)) {
+                    JOptionPane.showMessageDialog(this, "El correo ha sido editado.", "Correo editado", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+                Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Escribe el nuevo correo a modificar", "Campo vacío", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
