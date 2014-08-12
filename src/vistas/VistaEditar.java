@@ -22,7 +22,7 @@ import modelo.Origen;
 
 /**
  *
- * @author Macias
+ * @author Macias | Diego
  */
 public class VistaEditar extends javax.swing.JDialog {
 
@@ -50,14 +50,6 @@ public class VistaEditar extends javax.swing.JDialog {
             Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void reset() {
-        tfIdCorreo.setText("");
-        tfCorreo.setText("");
-        selectOrigen.setSelectedIndex(0);
-        selectGrupo.setSelectedIndex(0);
-        cbxHabilitado.setSelected(false);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,6 +76,7 @@ public class VistaEditar extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         rbtnId = new javax.swing.JRadioButton();
         rbtnCorreo = new javax.swing.JRadioButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -92,15 +85,19 @@ public class VistaEditar extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel2.setText("Correo:");
 
+        tfCorreo.setEnabled(false);
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel3.setText("Origen:");
 
         selectOrigen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectOrigen.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel4.setText("Grupo:");
 
         selectGrupo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectGrupo.setEnabled(false);
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +107,7 @@ public class VistaEditar extends javax.swing.JDialog {
         });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -124,6 +122,7 @@ public class VistaEditar extends javax.swing.JDialog {
         });
 
         cbxHabilitado.setText("Habilitado");
+        cbxHabilitado.setEnabled(false);
 
         jSeparator1.setForeground(new java.awt.Color(204, 204, 204));
 
@@ -134,6 +133,14 @@ public class VistaEditar extends javax.swing.JDialog {
         buttonGroup1.add(rbtnCorreo);
         rbtnCorreo.setText("Correo");
         rbtnCorreo.setToolTipText("");
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -163,14 +170,16 @@ public class VistaEditar extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbxHabilitado)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnGuardar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSalir))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(rbtnId)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rbtnCorreo)))
-                        .addGap(0, 152, Short.MAX_VALUE)))
+                        .addGap(0, 202, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalir)))
                 .addContainerGap())
         );
 
@@ -206,7 +215,8 @@ public class VistaEditar extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnSalir))
+                    .addComponent(btnSalir)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -230,10 +240,45 @@ public class VistaEditar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void habilitarEdicion(){
+        rbtnId.setEnabled(false);
+        rbtnCorreo.setEnabled(false);
+        tfIdCorreo.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        
+        tfCorreo.setEnabled(true);
+        selectOrigen.setEnabled(true);
+        selectGrupo.setEnabled(true);
+        cbxHabilitado.setEnabled(true);
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+    }
+    
+    public void reiniciarComponentes(){
+        correoActual=null;
+        
+        tfIdCorreo.setText("");
+        tfCorreo.setText("");
+        selectOrigen.setSelectedIndex(0);
+        selectGrupo.setSelectedIndex(0);
+        cbxHabilitado.setSelected(false);
+        
+        rbtnId.setEnabled(true);
+        rbtnCorreo.setEnabled(true);
+        tfIdCorreo.setEnabled(true);
+        btnBuscar.setEnabled(true);
+        tfCorreo.setEnabled(false);
+        selectOrigen.setEnabled(false);
+        selectGrupo.setEnabled(false);
+        cbxHabilitado.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
+    
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        String textoCorreo = StringValidation.validaTexto(tfIdCorreo.getText());
-        if (textoCorreo != null) {
+        String textoCorreo = tfIdCorreo.getText().trim();
+        if (!textoCorreo.equals("")) {
 
             try {
 
@@ -251,19 +296,21 @@ public class VistaEditar extends javax.swing.JDialog {
                 }
 
                 if (correoActual != null) {
+                    this.habilitarEdicion();
+                    
                     tfCorreo.setText(correoActual.getNombre());
                     selectOrigen.setSelectedItem(correoActual.getOrigen().getNombre());
                     selectGrupo.setSelectedItem(correoActual.getGrupo().getNombre());
                     cbxHabilitado.setSelected(correoActual.isHabilitado());
                 } else {
-                    JOptionPane.showMessageDialog(this, "No existe correo con ese ID", "No existe correo", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No se encontraron resulados", "No existe correo", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                 Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "Error: " + ex, "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Escriba un ID del correo", "Campo vacío", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Escriba un ID o correo", "Campo vacío", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -275,37 +322,54 @@ public class VistaEditar extends javax.swing.JDialog {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         String correo = tfCorreo.getText();
+
+        //VERIFICACION DE QUE SEA UN CORREO VALIDO
         if (StringValidation.validaCorreo(correo)) {
             try {
+                //SE CREA OBJET Y SE INICIAN VARIABLES INDEPENDIENTEMENTE DE SI ES NUEVO O ACTUALIZACION
                 RegistraCorreo registraCorreo = new RegistraCorreo();
-                if (!registraCorreo.existeNombreCorreo(correo)) {
-                    
-                    String sorigen = (String) selectOrigen.getSelectedItem();
-                    String sgrupo = (String) selectGrupo.getSelectedItem();
-                    boolean habilitado = cbxHabilitado.isSelected();
-                    
-                    Origen origen = new RegistraOrigen().getOrigenByName(sorigen);
-                    Grupo grupo = new RegistraGrupo().getGrupoByName(sgrupo);
-                    
-                    Correo nuevo = new Correo(correo, origen, grupo, habilitado);
-                    
-                    if (registraCorreo.editarCorreo(correoActual, nuevo)) {
-                        JOptionPane.showMessageDialog(this, "El correo ha sido editado.", "Correo editado", JOptionPane.INFORMATION_MESSAGE);
-                        reset();
+                
+                String sorigen = (String) selectOrigen.getSelectedItem();
+                String sgrupo = (String) selectGrupo.getSelectedItem();
+                boolean habilitado = cbxHabilitado.isSelected();
+
+                Origen origen = new RegistraOrigen().getOrigenByName(sorigen);
+                Grupo grupo = new RegistraGrupo().getGrupoByName(sgrupo);
+
+                Correo nuevo = new Correo(correo, origen, grupo, habilitado);
+
+                //VERIFICACION SI SE TRATA DE ACTUALIZACION O CORREO NUEVO
+                if (correoActual.getNombre().equals(correo)) {
+                    if (registraCorreo.editarCorreo("actualizar", correoActual, nuevo)) {
+                        JOptionPane.showMessageDialog(this, "El correo ha sido actualizado.", "Correo actualizado", JOptionPane.INFORMATION_MESSAGE);
+                        reiniciarComponentes();
                     } else {
                         JOptionPane.showMessageDialog(this, "No se edito el correo.", "No se edito el correo", JOptionPane.ERROR_MESSAGE);
                     }
-                    
                 } else {
-                    JOptionPane.showMessageDialog(this, "Ya existe ese nombre de correo", "Ya existe correo", JOptionPane.ERROR_MESSAGE);
+                    //SI ES NUEVO CORREO VERIFICAMOS QUE NO SEA UNO YA EXISTENTE
+                    if (!registraCorreo.existeNombreCorreo(correo)) {
+                        if (registraCorreo.editarCorreo("nuevo", correoActual, nuevo)) {
+                            JOptionPane.showMessageDialog(this, "El correo ha sido editado.", "Correo editado", JOptionPane.INFORMATION_MESSAGE);
+                            reiniciarComponentes();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No se edito el correo.", "No se edito el correo", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Ya existe ese nombre de correo", "Ya existe correo", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
                 Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Escribe el nuevo correo a modificar", "Campo vacío", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Escribe un correo válido", "Error de correo", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.reiniciarComponentes();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -352,6 +416,7 @@ public class VistaEditar extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
