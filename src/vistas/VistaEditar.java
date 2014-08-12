@@ -50,6 +50,14 @@ public class VistaEditar extends javax.swing.JDialog {
             Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void reset() {
+        tfIdCorreo.setText("");
+        tfCorreo.setText("");
+        selectOrigen.setSelectedIndex(0);
+        selectGrupo.setSelectedIndex(0);
+        cbxHabilitado.setSelected(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -269,19 +277,27 @@ public class VistaEditar extends javax.swing.JDialog {
         String correo = tfCorreo.getText();
         if (StringValidation.validaCorreo(correo)) {
             try {
-                String sorigen = (String) selectOrigen.getSelectedItem();
-                String sgrupo = (String) selectGrupo.getSelectedItem();
-                boolean habilitado = cbxHabilitado.isSelected();
-                
                 RegistraCorreo registraCorreo = new RegistraCorreo();
-                
-                Origen origen = new RegistraOrigen().getOrigenByName(sorigen);
-                Grupo grupo = new RegistraGrupo().getGrupoByName(sgrupo);
-
-                Correo nuevo = new Correo(correo, origen, grupo, habilitado);
-
-                if (registraCorreo.editarCorreo(correoActual, nuevo)) {
-                    JOptionPane.showMessageDialog(this, "El correo ha sido editado.", "Correo editado", JOptionPane.INFORMATION_MESSAGE);
+                if (!registraCorreo.existeNombreCorreo(correo)) {
+                    
+                    String sorigen = (String) selectOrigen.getSelectedItem();
+                    String sgrupo = (String) selectGrupo.getSelectedItem();
+                    boolean habilitado = cbxHabilitado.isSelected();
+                    
+                    Origen origen = new RegistraOrigen().getOrigenByName(sorigen);
+                    Grupo grupo = new RegistraGrupo().getGrupoByName(sgrupo);
+                    
+                    Correo nuevo = new Correo(correo, origen, grupo, habilitado);
+                    
+                    if (registraCorreo.editarCorreo(correoActual, nuevo)) {
+                        JOptionPane.showMessageDialog(this, "El correo ha sido editado.", "Correo editado", JOptionPane.INFORMATION_MESSAGE);
+                        reset();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se edito el correo.", "No se edito el correo", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ya existe ese nombre de correo", "Ya existe correo", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
                 Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);

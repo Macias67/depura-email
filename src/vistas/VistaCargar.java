@@ -17,8 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import vistas.carga.AddGrupo;
 import vistas.carga.AddOrigen;
 
-/**
- *
+/*
  * @author Luis Macias | Diego Rodriguez
  */
 public class VistaCargar extends javax.swing.JDialog {
@@ -28,9 +27,7 @@ public class VistaCargar extends javax.swing.JDialog {
     private AddOrigen vistaAddOrigen;
     private AddGrupo vistaAddGrupo;
     private String rutaArchivo;
-    public static int correosNuevos;
-    public static int correosRepetidos;
-
+    
     /**
      * Creates new form Principal
      *
@@ -73,6 +70,7 @@ public class VistaCargar extends javax.swing.JDialog {
         btnAddGrupo = new javax.swing.JButton();
         selectGrupo = new javax.swing.JComboBox();
         btnProcesar = new javax.swing.JButton();
+        cbxHabilitado = new javax.swing.JCheckBox();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargar TXT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -104,8 +102,6 @@ public class VistaCargar extends javax.swing.JDialog {
             }
         });
 
-        selectOrigen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnAddGrupo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAddGrupo.setText("+");
         btnAddGrupo.setMargin(new java.awt.Insets(2, 5, 2, 5));
@@ -122,6 +118,9 @@ public class VistaCargar extends javax.swing.JDialog {
                 btnProcesarActionPerformed(evt);
             }
         });
+
+        cbxHabilitado.setSelected(true);
+        cbxHabilitado.setText("Habilitados");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,7 +145,8 @@ public class VistaCargar extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAddGrupo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxHabilitado))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,9 +170,10 @@ public class VistaCargar extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddGrupo)
                     .addComponent(selectGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(cbxHabilitado)
                 .addGap(18, 18, 18)
-                .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnProcesar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,8 +189,8 @@ public class VistaCargar extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -229,20 +230,29 @@ public class VistaCargar extends javax.swing.JDialog {
         if(tfArchivo.getText().equals("")){
             JOptionPane.showMessageDialog(this, "No ha seleccionado nungun archivo!", "Problemas.", JOptionPane.WARNING_MESSAGE);
         }else{
-            try {
-                rutaArchivo=tfArchivo.getText();
-                RegistraCorreo registraCoreo = new RegistraCorreo();
+            if(selectOrigen.getSelectedItem().equals("") || selectGrupo.getSelectedItem().equals("")){
+                JOptionPane.showMessageDialog(this, "Se necesita un origen y un destino, por favor registralos", "Problemas.", JOptionPane.WARNING_MESSAGE);
+            }else{
+                try {
+                    rutaArchivo=tfArchivo.getText();
+                    RegistraCorreo registraCoreo = new RegistraCorreo();
+                    registraCoreo.setConfig(rutaArchivo, selectOrigen.getSelectedItem().toString(), selectGrupo.getSelectedItem().toString(), cbxHabilitado.isSelected());
+                    
+                    //metodo correra un hilo guardando los correos
+                    Thread procesaCorreos = new Thread(registraCoreo);
+                    procesaCorreos.start();
+                    
+                    VistaLoading cargado = new VistaLoading(null, true);
+                    cargado.setLocationRelativeTo(this);
+                    cargado.setVisible(true);
+                    
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "ERROR: "+e+".", "Error", JOptionPane.ERROR_MESSAGE);
+                }   
                 
-                if(registraCoreo.guardarCorreos(rutaArchivo)){
-                    tfArchivo.setText("");
-                    JOptionPane.showMessageDialog(this, "Termino el procesamiento de correos \r\n Correos nuevos: "+correosNuevos+"\r\n Correos repetidos: "+correosRepetidos, "Nombre añadido.", JOptionPane.INFORMATION_MESSAGE);
-                }else{
-                    JOptionPane.showMessageDialog(this, "ERROR: No se guardaron tus correos :/ ", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "ERROR: "+e+".", "Error", JOptionPane.ERROR_MESSAGE);
-            }   
+            }
         }
+        
     }//GEN-LAST:event_btnProcesarActionPerformed
 
     /**www.h
@@ -287,12 +297,13 @@ public class VistaCargar extends javax.swing.JDialog {
     private javax.swing.JButton btnAddOrigen;
     private javax.swing.JButton btnProcesar;
     private javax.swing.JButton btnSeleccionar;
+    private javax.swing.JCheckBox cbxHabilitado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JComboBox selectGrupo;
     public static javax.swing.JComboBox selectOrigen;
-    private javax.swing.JTextField tfArchivo;
+    public static javax.swing.JTextField tfArchivo;
     // End of variables declaration//GEN-END:variables
 }
