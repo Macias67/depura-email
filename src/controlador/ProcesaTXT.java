@@ -52,7 +52,7 @@ public class ProcesaTXT implements Runnable {
     private ProcesaTXT() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.registraCorreo = new RegistraCorreo();
     }
-    
+
     public static ProcesaTXT getInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         if (instance == null) {
             instance = new ProcesaTXT();
@@ -72,6 +72,8 @@ public class ProcesaTXT implements Runnable {
     }
 
     private void procesaTXT() throws SQLException {
+
+        long inicio = System.currentTimeMillis();
 
         try {
             //FileReader fileReader = new FileReader(ruta);
@@ -120,6 +122,13 @@ public class ProcesaTXT implements Runnable {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(vistaLoading, "Error : " + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        long termina = System.currentTimeMillis();
+
+        long totaltiempo = termina - inicio;
+        System.out.println("TOTAL TIEMPO DEL HILO (ml): " + (totaltiempo));
+        System.out.println("TOTAL TIEMPO DEL HILO (s): " + (totaltiempo)/(60*1000));
+        System.out.println("TOTAL TIEMPO DEL HILO (s): " + (totaltiempo)/(60*60*1000));
     }
 
     @Override
