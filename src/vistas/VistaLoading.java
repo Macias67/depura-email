@@ -5,9 +5,13 @@
  */
 package vistas;
 
+import controlador.ProcesaTXT;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -26,14 +30,20 @@ public class VistaLoading extends javax.swing.JDialog {
     public VistaLoading(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        initThread();
     }
 
-    public void imgSize() {
-        BufferedImage img = null;
+    private void initThread() {
         try {
-            img = ImageIO.read(new File("strawberry.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
+            
+            ProcesaTXT procesaTXT = ProcesaTXT.getInstance();
+            procesaTXT.setVistaLoading(this);
+            //metodo correra el hilo de ProcesaTXT
+            Thread procesaCorreos = new Thread(procesaTXT);
+            procesaCorreos.start();
+            
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(VistaLoading.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -59,6 +69,8 @@ public class VistaLoading extends javax.swing.JDialog {
 
         lblInfo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblInfo.setText("Agregando 0 de 0");
+
+        pbProgreso.setToolTipText("hola");
 
         lblCompletado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblCompletado.setText("0% Completado");
@@ -155,6 +167,7 @@ public class VistaLoading extends javax.swing.JDialog {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 VistaLoading dialog = new VistaLoading(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -172,8 +185,8 @@ public class VistaLoading extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    public static javax.swing.JLabel lblCompletado;
-    public static javax.swing.JLabel lblInfo;
-    public static javax.swing.JProgressBar pbProgreso;
+    public javax.swing.JLabel lblCompletado;
+    public javax.swing.JLabel lblInfo;
+    public javax.swing.JProgressBar pbProgreso;
     // End of variables declaration//GEN-END:variables
 }
