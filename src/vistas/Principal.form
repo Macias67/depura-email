@@ -58,6 +58,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Exportar"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menu_exportar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Exportar TXT"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_exportarActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

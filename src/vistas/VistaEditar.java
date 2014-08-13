@@ -31,7 +31,6 @@ public class VistaEditar extends javax.swing.JDialog {
 
     /**
      * Creates new form VistaEditar
-     *
      * @param parent
      * @param modal
      */
@@ -47,7 +46,7 @@ public class VistaEditar extends javax.swing.JDialog {
             selectGrupo.setModel(comboBoxModel.getCbmodel(NombreTablas.GRUPOS));
             selectOrigen.setModel(comboBoxModel.getCbmodel(NombreTablas.ORIGENES));
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
