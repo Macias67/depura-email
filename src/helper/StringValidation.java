@@ -28,5 +28,10 @@ public class StringValidation {
         Pattern patron = Pattern.compile(email_pattern);
         return patron.matcher(correo).matches();
     }
-
+    
+    public static boolean validaDigitos(String correo) {
+        String email_pattern = "[0-9]+";
+        Pattern patron = Pattern.compile(email_pattern);
+        return patron.matcher(correo).matches();
+    }
 }

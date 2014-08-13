@@ -5,9 +5,11 @@
  */
 package vistas;
 
+import controlador.Buscador;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import modelo.MyComboBoxModel;
 import modelo.NombreTablas;
 
@@ -23,6 +25,8 @@ public class Principal extends javax.swing.JFrame {
     private VistaCargar vistaCargar;
     private VistaEditar vistaEditar;
     private VistaEliminar vistaEliminar;
+    
+    private final String[] NOMBRE_COLUMNAS = {"ID", "Correo", "Origen", "Grupo", "Habilitado"};
 
     /**
      * Creates new form Principal
@@ -30,6 +34,7 @@ public class Principal extends javax.swing.JFrame {
     private Principal() {
         initComponents();
         init();
+        initTable();
     }
     
     private void init() {
@@ -40,6 +45,11 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void initTable() {
+        DefaultTableModel tableModel = new DefaultTableModel(new String[][]{{}}, NOMBRE_COLUMNAS);
+        this.tablaBusqueda.setModel(tableModel);
     }
 
     /**
@@ -69,13 +79,12 @@ public class Principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         selectGrupo = new javax.swing.JComboBox();
         cbxHabilitado = new javax.swing.JCheckBox();
-        jLabel3 = new javax.swing.JLabel();
-        correo_txt = new javax.swing.JTextField();
-        buscar_btn = new javax.swing.JButton();
-        limpiar_btn = new javax.swing.JButton();
+        tfBusqueda = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaBusqueda = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menu_importar = new javax.swing.JMenuItem();
@@ -107,14 +116,17 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Correo:");
+        tfBusqueda.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        correo_txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
-        buscar_btn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        buscar_btn.setText("Buscar");
-
-        limpiar_btn.setText("Limpiar");
+        btnLimpiar.setText("Limpiar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,9 +136,9 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(buscar_btn)
+                        .addComponent(btnBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(limpiar_btn)
+                        .addComponent(btnLimpiar)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,10 +154,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cbxHabilitado, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
                         .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(458, 458, 458))
-                    .addComponent(correo_txt)))
+                    .addComponent(tfBusqueda)))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {selectGrupo, selectOrigen});
@@ -153,9 +162,8 @@ public class Principal extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(correo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(tfBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -167,8 +175,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(cbxHabilitado))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buscar_btn)
-                    .addComponent(limpiar_btn))
+                    .addComponent(btnBuscar)
+                    .addComponent(btnLimpiar))
                 .addContainerGap())
         );
 
@@ -183,7 +191,7 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 202, Short.MAX_VALUE)
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaBusqueda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -194,7 +202,7 @@ public class Principal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaBusqueda);
 
         jMenu1.setText("Importar");
 
@@ -292,6 +300,27 @@ public class Principal extends javax.swing.JFrame {
         vistaEditar.setVisible(true);
     }//GEN-LAST:event_menuItemCorreosActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            // TODO add your handling code here:
+            String query = tfBusqueda.getText();
+            String origen = (String) selectOrigen.getSelectedItem();
+            String grupo = (String) selectGrupo.getSelectedItem();
+            boolean habilitado = cbxHabilitado.isSelected();
+            
+            Buscador buscador = new Buscador();
+            String[][] resultado = buscador.resultadoBusqueda(query, origen, grupo, habilitado);
+            
+            System.out.println(resultado.length);
+            
+            DefaultTableModel tmodel = new DefaultTableModel(resultado, NOMBRE_COLUMNAS);
+            tablaBusqueda.setModel(tmodel);
+            
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -325,12 +354,11 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buscar_btn;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JCheckBox cbxHabilitado;
-    private javax.swing.JTextField correo_txt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -340,12 +368,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JButton limpiar_btn;
     private javax.swing.JMenuItem menuItemCorreos;
     private javax.swing.JMenuItem menu_eliminar;
     private javax.swing.JMenuItem menu_importar;
     public static javax.swing.JComboBox selectGrupo;
     public static javax.swing.JComboBox selectOrigen;
+    private javax.swing.JTable tablaBusqueda;
+    private javax.swing.JTextField tfBusqueda;
     // End of variables declaration//GEN-END:variables
 }
