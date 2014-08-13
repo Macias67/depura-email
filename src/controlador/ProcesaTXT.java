@@ -80,7 +80,6 @@ public class ProcesaTXT implements Runnable {
         long inicio = System.currentTimeMillis();
 
         try {
-            //FileReader fileReader = new FileReader(ruta);
             // INICIO PROCESO DE CONTAR TOTAL DE LINEAS -----------------------
             BufferedReader contadorLineas = new BufferedReader(new FileReader(ruta));
             //recorrido para saber el total de correos
@@ -141,6 +140,7 @@ public class ProcesaTXT implements Runnable {
     public void run() {
         try {
             this.procesaTXT();
+            this.resetInstance();
         } catch (SQLException ex) {
             Logger.getLogger(ProcesaTXT.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(vistaLoading, "Error : " + ex, "Error", JOptionPane.ERROR_MESSAGE);
