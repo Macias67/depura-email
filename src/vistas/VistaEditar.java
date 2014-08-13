@@ -240,7 +240,7 @@ public class VistaEditar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void habilitarEdicion(){
+    private void habilitarEdicion(){
         rbtnId.setEnabled(false);
         rbtnCorreo.setEnabled(false);
         tfIdCorreo.setEnabled(false);
@@ -254,7 +254,7 @@ public class VistaEditar extends javax.swing.JDialog {
         btnCancelar.setEnabled(true);
     }
     
-    public void reiniciarComponentes(){
+    private void reiniciarComponentes(){
         correoActual=null;
         
         tfIdCorreo.setText("");
