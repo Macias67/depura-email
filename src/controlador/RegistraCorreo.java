@@ -66,16 +66,37 @@ public class RegistraCorreo {
         }
     }
 
-    public boolean editarCorreo(Correo actual, Correo nuevo) throws SQLException {
-        // Deshabilito el correo actual
-        String query = "UPDATE `" + NombreTablas.CORREOS.getValue() + "` SET `habilitado` = 'false' WHERE `id_correo` = " + actual.getId();
-        int update = this.conexion.executeUpdate(query);
-        // Inserto nuevo registro
-        query = "INSERT INTO `" + NombreTablas.CORREOS.getValue() + "` (`correo`,`id_origen`,`id_grupo`,`habilitado`) "
-                + "VALUES ('" + nuevo.getNombre() + "','" + nuevo.getOrigen().getId() + "','" + nuevo.getGrupo().getId() + "','" + nuevo.isHabilitado() + "')";
-        int insert = this.conexion.executeUpdate(query);
+    public boolean editarCorreo(String caso, Correo actual, Correo nuevo) throws SQLException {
+        boolean band=false;
+        String query;
+        int update;
+        
+        switch (caso){
+            case "actualizar":
+                query="UPDATE `"+NombreTablas.CORREOS.getValue()+"` SET `id_origen`="+nuevo.getOrigen().getId()+", `id_grupo`="+nuevo.getGrupo().getId()+", `habilitado`='"+nuevo.isHabilitado()+"' WHERE `id_correo` = "+actual.getId();
+                update = this.conexion.executeUpdate(query);
+                
+                band=(update==1);
+            break;
+            
+            case "nuevo":
+                // Deshabilito el correo actual
+                query = "UPDATE `" + NombreTablas.CORREOS.getValue() + "` SET `habilitado` = 'false' WHERE `id_correo` = " + actual.getId();
+                update = this.conexion.executeUpdate(query);
+                // Inserto nuevo registro
+                query = "INSERT INTO `" + NombreTablas.CORREOS.getValue() + "` (`correo`,`id_origen`,`id_grupo`,`habilitado`) "
+                        + "VALUES ('" + nuevo.getNombre() + "','" + nuevo.getOrigen().getId() + "','" + nuevo.getGrupo().getId() + "','" + nuevo.isHabilitado() + "')";
+                int insert = this.conexion.executeUpdate(query);
 
-        return (update == 1 && insert == 1);
+                band=(update == 1 && insert == 1);
+            break;
+                
+            default:
+                JOptionPane.showMessageDialog(null, "Error en el switch", "Error en controlador RegistraCorreo", JOptionPane.WARNING_MESSAGE);
+            break;
+        }
+        
+        return band;
     }
 
     public boolean existeNombreCorreo(String nombre) throws SQLException {
