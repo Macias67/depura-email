@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import helper.Benchmark;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Correo;
 import modelo.Grupo;
-import modelo.MysqlConnect;
 import modelo.Origen;
 import vistas.VistaLoading;
 
@@ -60,6 +60,10 @@ public class ProcesaTXT implements Runnable {
         return instance;
     }
 
+    public void resetInstance() {
+        instance = null;
+    }
+
     public void setParametros(String ruta, String origen, String grupo, boolean habilitado) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.ruta = ruta;
         this.origen = new RegistraOrigen().getOrigenByName(origen);
@@ -96,13 +100,13 @@ public class ProcesaTXT implements Runnable {
                 if (registraCorreo.existeNombreCorreo(linea)) {
                     // Si es repetido
                     cont_repetidos++;
-                    System.err.println("Correos repetidos: " + cont_repetidos + " = " + linea);
+                    //System.err.println("Correos repetidos: " + cont_repetidos + " = " + linea);
                 } else {
                     //SI NO SE CENCUENTRA REPETIDO LO INSERTAMOS
                     correo = new Correo(linea, origen, grupo, habilitado);
                     if (registraCorreo.guardaCorreo(correo)) {
                         cont_nuevos++;
-                        System.out.println("Correos nuevos: " + cont_nuevos + " = " + linea);
+                        //System.out.println("Correos nuevos: " + cont_nuevos + " = " + linea);
                     }
                 }
                 // Regla de 3 para porcentaje
@@ -126,9 +130,11 @@ public class ProcesaTXT implements Runnable {
         long termina = System.currentTimeMillis();
 
         long totaltiempo = termina - inicio;
-        System.out.println("TOTAL TIEMPO DEL HILO (ml): " + (totaltiempo));
-        System.out.println("TOTAL TIEMPO DEL HILO (s): " + (totaltiempo)/(60*1000));
-        System.out.println("TOTAL TIEMPO DEL HILO (s): " + (totaltiempo)/(60*60*1000));
+                      
+        String mensaje = "Se han guardo " + cont_nuevos + " correos nuevos de " + total_correos + ". ("+Benchmark.calculaTiempo(totaltiempo)+")";
+        
+        JOptionPane.showMessageDialog(vistaLoading, mensaje, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
+        vistaLoading.dispose();
     }
 
     @Override
