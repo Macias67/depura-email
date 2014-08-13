@@ -25,6 +25,7 @@ public class VistaLoading extends javax.swing.JDialog {
      */
     public VistaLoading(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.setUndecorated(true);
         initComponents();
     }
 

@@ -92,8 +92,7 @@ public class ExportaTXT implements Runnable{
                     cont_escritos++;
                     linea=respuesta.getNString("correo");
                     escribir_archivo.write(linea);
-                    System.out.println("Correo "+cont_escritos+" de "+total_correos+" - "+linea);
-                    System.out.println("Correov2 "+cont_escritos+" de "+total_correos+" - "+linea);
+                    
                     if(cont_escritos<total_correos){
                         escribir_archivo.write("\r\n");
                     }
