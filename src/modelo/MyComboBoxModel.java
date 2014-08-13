@@ -59,9 +59,13 @@ public class MyComboBoxModel {
         String[] array;
 
         if (lista.size() > 0) {
-            array = new String[lista.size()];
-            for (int i = 0; i < lista.size(); i++) {
-                array[i] = (String) lista.get(i);
+            array = new String[lista.size()+1];
+            for (int i = 0; i < array.length; i++) {
+                if (i==0) {
+                    array[i] = "";
+                    continue;
+                }
+                array[i] = (String) lista.get(i-1);
             }
         } else {
             array = new String[]{""};

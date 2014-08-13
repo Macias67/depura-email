@@ -2,6 +2,7 @@ package controlador;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import modelo.Correo;
 import modelo.Grupo;
 import modelo.Origen;
