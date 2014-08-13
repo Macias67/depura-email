@@ -80,12 +80,12 @@ public class ExportaTXT implements Runnable{
             if (this.caso.equals("todos")) {
                 BufferedWriter escribir_archivo = new BufferedWriter(new FileWriter(new File(ruta_escritorio+this.NombreArchivo)));
                 //CONSULTA PARA SABER CUANTOS RESULTADOS RETORNA LA BUSQUEDA
-                query="SELECT COUNT(`correo`) FROM `"+NombreTablas.CORREOS.getValue()+"`";
+                query="SELECT COUNT(`correo`) FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true'";
                 respuesta = this.conexion.executeQuery(query);
                 respuesta.next();
                 total_correos=respuesta.getInt(1);
                 //CONSULTA PARA EXTRAER TODOS LOS CORREOS DE LA BD
-                query="SELECT `correo` FROM `"+NombreTablas.CORREOS.getValue()+"`";
+                query="SELECT `correo` FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true'";
                 respuesta = this.conexion.executeQuery(query);
                 
                 while (respuesta.next()) {
