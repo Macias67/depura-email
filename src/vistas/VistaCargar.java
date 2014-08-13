@@ -245,6 +245,7 @@ public class VistaCargar extends javax.swing.JDialog {
                     procesaTXT.setParametros(ruta, origen, grupo, cbxHabilitado.isSelected());
                     
                     VistaLoading vistaLoading = new VistaLoading(null, true);
+                    vistaLoading.setProceso("importa");
                     vistaLoading.setLocationRelativeTo(null);
                     vistaLoading.setVisible(true);
                     
