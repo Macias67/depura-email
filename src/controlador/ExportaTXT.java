@@ -29,8 +29,8 @@ public class ExportaTXT implements Runnable{
     // Parametros para la exportacion
     private String caso;
     private String NombreArchivo;
-    private Origen origen;
-    private Grupo grupo;
+    private Origen origen=null;
+    private Grupo grupo=null;
 
     //Vista que muestra el proceso
     private VistaLoading vistaLoading;
@@ -71,19 +71,26 @@ public class ExportaTXT implements Runnable{
     }
     
     private void exportaTXT() throws SQLException {
-        String query;
+        String query="";
+        String query_contador="";
         String linea;
         ResultSet respuesta;
+        boolean band=false;
         String ruta_escritorio=System.getProperty("user.home")+"\\Desktop\\";
   
         try {
+            //BURRE SE USARA INDEPENDIENTEMENTE DEL CASO
+             BufferedWriter escribir_archivo = new BufferedWriter(new FileWriter(new File(ruta_escritorio+this.NombreArchivo)));
+             
+            //EN CASO DE EXPORTAR TODO
             if (this.caso.equals("todos")) {
-                BufferedWriter escribir_archivo = new BufferedWriter(new FileWriter(new File(ruta_escritorio+this.NombreArchivo)));
+                
                 //CONSULTA PARA SABER CUANTOS RESULTADOS RETORNA LA BUSQUEDA
-                query="SELECT COUNT(`correo`) FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true'";
-                respuesta = this.conexion.executeQuery(query);
+                query_contador="SELECT COUNT(`correo`) FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true'";
+                respuesta = this.conexion.executeQuery(query_contador);
                 respuesta.next();
                 total_correos=respuesta.getInt(1);
+                
                 //CONSULTA PARA EXTRAER TODOS LOS CORREOS DE LA BD
                 query="SELECT `correo` FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true'";
                 respuesta = this.conexion.executeQuery(query);
@@ -105,64 +112,62 @@ public class ExportaTXT implements Runnable{
                 }
                 
                 escribir_archivo.close();
+                band=true;
+                
+             //EN CASO DE EXPORTAR ORIGEN Y/O GRUPO 
             } else if (this.caso.equals("origen-grupo")) {
-                //
+                
+                //SE CREA LA CONSULTA DEPENDIENDO EL ORIGEN Y GRUPO SELECCIONADO
+                if(origen!=null && grupo!=null){
+                    query_contador="SELECT COUNT(`correo`) FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true' AND `id_origen` = "+origen.getId()+" AND `id_grupo` = "+grupo.getId();
+                    query="SELECT `correo` FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true' AND `id_origen` = "+origen.getId()+" AND `id_grupo` = "+grupo.getId();
+                    
+                }else if(origen!=null && grupo==null){
+                    query_contador="SELECT COUNT(`correo`) FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true' AND `id_origen` = "+origen.getId();
+                    query="SELECT `correo` FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true' AND `id_origen` = "+origen.getId();
+                    
+                }else if(origen==null && grupo!=null){
+                    query_contador="SELECT COUNT(`correo`) FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true' AND `id_grupo` = "+grupo.getId();
+                    query="SELECT `correo` FROM `"+NombreTablas.CORREOS.getValue()+"` WHERE `habilitado` = 'true' AND `id_grupo` = "+grupo.getId();
+                }
+                
+                //CONSULTA PARA SABER CUANTOS RESULTADOS RETORNA LA BUSQUEDA
+                respuesta = this.conexion.executeQuery(query_contador);
+                respuesta.next();
+                total_correos=respuesta.getInt(1);
+                
+                //CONSULTA PARA EXTRAER TODOS LOS CORREOS DE LA BD
+                respuesta = this.conexion.executeQuery(query);
+                
+                while (respuesta.next()) {
+                    cont_escritos++;
+                    linea=respuesta.getNString("correo");
+                    escribir_archivo.write(linea);
+                    
+                    if(cont_escritos<total_correos){
+                        escribir_archivo.write("\r\n");
+                    }
+                     // Regla de 3 para porcentaje
+                    int porcentaje = (cont_escritos * 100) / total_correos;
+                    // Actualizamos datos de la ventana
+                    vistaLoading.lblInfo.setText("Exportando " + cont_escritos + " de " + total_correos);
+                    vistaLoading.pbProgreso.setValue(porcentaje);
+                    vistaLoading.lblCompletado.setText(porcentaje + "% completado...");
+                }
+                
+                escribir_archivo.close();
+                band=true;
             }
-            
+                
             vistaLoading.dispose();
-            JOptionPane.showMessageDialog(vistaLoading, "Exportación finalizada, nuevo documento : \r\n"+ruta_escritorio+NombreArchivo, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
+            if(band==true){
+                JOptionPane.showMessageDialog(vistaLoading, "Exportación finalizada, nuevo documento : \r\n"+ruta_escritorio+NombreArchivo, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);   
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR: " + e + ".", "Error", JOptionPane.ERROR_MESSAGE);
         }
 //        long inicio = System.currentTimeMillis();
-//
-//        try {
-//            // INICIO PROCESO DE CONTAR TOTAL DE LINEAS -----------------------
-//            BufferedReader contadorLineas = new BufferedReader(new FileReader(ruta));
-//            //recorrido para saber el total de correos
-//            String linea;
-//            while ((linea = contadorLineas.readLine()) != null) {
-//                total_correos++;
-//            }
-//            contadorLineas.close();
-//            // TERMINO PROCESO DE CONTAR TOTAL DE LINEAS -----------------------
-//
-//            // INICIO PROCESO DE PROCESAR EL TXT -----------------------
-//            BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta));
-//            Correo correo;
-//            while ((linea = leer_archivo.readLine()) != null) {
-//                linea = linea.trim();
-//                //PRIMERO VERIFICAMOS QUE EL CORREO NO SE ENCUENTRE REPETIDO
-//                if (registraCorreo.existeNombreCorreo(linea)) {
-//                    // Si es repetido
-//                    cont_repetidos++;
-//                    //System.err.println("Correos repetidos: " + cont_repetidos + " = " + linea);
-//                } else {
-//                    //SI NO SE CENCUENTRA REPETIDO LO INSERTAMOS
-//                    correo = new Correo(linea, origen, grupo, habilitado);
-//                    if (registraCorreo.guardaCorreo(correo)) {
-//                        cont_nuevos++;
-//                        //System.out.println("Correos nuevos: " + cont_nuevos + " = " + linea);
-//                    }
-//                }
-//                // Regla de 3 para porcentaje
-//                int procesados = cont_nuevos + cont_repetidos;
-//                int porcentaje = (procesados * 100) / total_correos;
-//
-//                // Actualizamos datos de la ventana
-//                vistaLoading.lblInfo.setText("Procesados " + procesados + " de " + total_correos);
-//                vistaLoading.pbProgreso.setValue(porcentaje);
-//                vistaLoading.lblCompletado.setText(porcentaje + "% completado...");
-//            }
-//            //cerrar el buffer
-//            leer_archivo.close();
-//            // TERMINO EL PROCESO DE PROCESAR EL TXT -----------------------
-//
-//            //System.out.println("Correos nuevos: " + cont_nuevos + " - Correos repetidos: " + cont_repetidos);
-//        } catch (IOException e) {
-//            JOptionPane.showMessageDialog(vistaLoading, "Error : " + e, "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//
+        
 //        long termina = System.currentTimeMillis();
 //
 //        long totaltiempo = termina - inicio;
@@ -172,6 +177,7 @@ public class ExportaTXT implements Runnable{
 //        JOptionPane.showMessageDialog(vistaLoading, mensaje, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
 //        vistaLoading.dispose();
     }
+    
     
     @Override
     public void run() {

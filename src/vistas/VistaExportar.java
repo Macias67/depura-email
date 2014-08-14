@@ -193,7 +193,31 @@ public class VistaExportar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        // TODO add your handling code here:
+        String NombreArchivo = tfNombreArchivo.getText();
+        if(!NombreArchivo.equals("")){
+            //ORIGEN Y GRUPO NO DEBEN ESTAR VACIOS
+            if(selectOrigen.getSelectedIndex()!=0 || selectGrupo.getSelectedIndex()!=0){
+                try {
+                    String origen = (String) selectOrigen.getSelectedItem();
+                    String grupo = (String) selectGrupo.getSelectedItem();
+
+                    ExportaTXT exportaTXT = ExportaTXT.getInstance();
+                    exportaTXT.setParametros("origen-grupo", NombreArchivo, origen, grupo);
+
+                    VistaLoading vistaLoading = new VistaLoading(null, true);
+                    vistaLoading.setProceso("exporta");
+                    vistaLoading.setLocationRelativeTo(null);
+                    vistaLoading.setVisible(true);
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "ERROR: " + e + ".", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Debes seleccionas un origen y/o grupo.", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Escribe el nombre para el archivo de salida", "Problemas.", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnExportarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarTodoActionPerformed
