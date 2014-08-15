@@ -26,10 +26,9 @@ public class Principal extends javax.swing.JFrame {
     private VistaCargar vistaCargar;
     private VistaEditar vistaEditar;
     private VistaEliminar vistaEliminar;
-    
-    private  Buscador buscador;
-    
+    private VistaExportar vistaExportar;
 
+    private  Buscador buscador;
     /**
      * Creates new form Principal
      */
@@ -99,6 +98,7 @@ public class Principal extends javax.swing.JFrame {
         menuItemCorreos = new javax.swing.JMenuItem();
         menu_eliminar = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        menu_exportar = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -250,6 +250,15 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Exportar");
+
+        menu_exportar.setText("Exportar TXT");
+        menu_exportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_exportarActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menu_exportar);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -330,6 +339,13 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void menu_exportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_exportarActionPerformed
+        vistaExportar = new VistaExportar(this, true);
+        vistaExportar.setLocationRelativeTo(this);
+        vistaExportar.setVisible(true);
+    }//GEN-LAST:event_menu_exportarActionPerformed
+
+
     /**
      * @param args the command line arguments
      */
@@ -380,6 +396,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblBusqueda;
     private javax.swing.JMenuItem menuItemCorreos;
     private javax.swing.JMenuItem menu_eliminar;
+    private javax.swing.JMenuItem menu_exportar;
     private javax.swing.JMenuItem menu_importar;
     public static javax.swing.JComboBox selectGrupo;
     public static javax.swing.JComboBox selectOrigen;

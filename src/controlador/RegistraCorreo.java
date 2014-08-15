@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.Correo;
 import modelo.Grupo;
-import modelo.Origen;
 import modelo.MysqlConnect;
 import modelo.NombreTablas;
+import modelo.Origen;
 
 /**
  * @author Diego

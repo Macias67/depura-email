@@ -31,7 +31,6 @@ public class VistaEditar extends javax.swing.JDialog {
 
     /**
      * Creates new form VistaEditar
-     *
      * @param parent
      * @param modal
      */
@@ -47,7 +46,7 @@ public class VistaEditar extends javax.swing.JDialog {
             selectGrupo.setModel(comboBoxModel.getCbmodel(NombreTablas.GRUPOS));
             selectOrigen.setModel(comboBoxModel.getCbmodel(NombreTablas.ORIGENES));
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-            Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -240,7 +239,7 @@ public class VistaEditar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void habilitarEdicion(){
+    private void habilitarEdicion(){
         rbtnId.setEnabled(false);
         rbtnCorreo.setEnabled(false);
         tfIdCorreo.setEnabled(false);
@@ -254,7 +253,7 @@ public class VistaEditar extends javax.swing.JDialog {
         btnCancelar.setEnabled(true);
     }
     
-    public void reiniciarComponentes(){
+    private void reiniciarComponentes(){
         correoActual=null;
         
         tfIdCorreo.setText("");

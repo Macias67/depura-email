@@ -6,14 +6,10 @@
 package vistas;
 
 import controlador.ProcesaTXT;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import controlador.ExportaTXT;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -29,18 +25,37 @@ public class VistaLoading extends javax.swing.JDialog {
      */
     public VistaLoading(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.setUndecorated(true);
         initComponents();
-        initThread();
     }
 
-    private void initThread() {
+    public void setProceso(String proceso){
+        if(proceso.equals("importa")){
+            initThreadImporta();
+        }else if(proceso.equals("exporta")){
+            initThreadExporta();
+        }
+    }
+    private void initThreadImporta() {
         try {
-            
             ProcesaTXT procesaTXT = ProcesaTXT.getInstance();
             procesaTXT.setVistaLoading(this);
             //metodo correra el hilo de ProcesaTXT
             Thread procesaCorreos = new Thread(procesaTXT);
             procesaCorreos.start();
+            
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(VistaLoading.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initThreadExporta(){
+        try {
+            ExportaTXT exportaTXT = ExportaTXT.getInstance();
+            exportaTXT.setVistaLoading(this);
+            //metodo correra el hilo de ProcesaTXT
+            Thread exportaCorreos = new Thread(exportaTXT);
+            exportaCorreos.start();
             
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(VistaLoading.class.getName()).log(Level.SEVERE, null, ex);
