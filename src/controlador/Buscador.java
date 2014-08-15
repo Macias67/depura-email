@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controlador;
 
 import helper.StringValidation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.Correo;
 import modelo.Grupo;
 import modelo.MysqlConnect;
@@ -20,40 +24,88 @@ import modelo.Origen;
  *
  * @author Macias
  */
-public class Buscador {
-    
+public class Buscador implements Runnable{
+
     private final MysqlConnect conexion;
+    private DefaultTableModel tableModel;
+    private JLabel label;
+    private JTable tabla;
     
+    public static final String[] NOMBRE_COLUMNAS = {"ID", "Correo", "Origen", "Grupo", "Habilitado"};
+    
+    private String consulta;
+    private String origen;
+    private String grupo;
+    private boolean habilitado;
+    
+    public boolean BUSCANDO = false;
+
     public Buscador() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.conexion = MysqlConnect.getConnection();
     }
     
-    public String[][] resultadoBusqueda(String key, String origen, String grupo, boolean habilitado) 
+    public void setDataTable(JLabel label, JTable tabla) {
+        this.label = label;
+        this.tabla = tabla;
+    }
+    
+    public void setParamBusqueda(String key, String origen, String grupo, boolean habilitado) {
+        this.consulta = key;
+        this.origen = origen;
+        this.grupo = grupo;
+        this.habilitado = habilitado;
+    }
+
+    private synchronized String[][] resultadoBusqueda()
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         
-        String query ="SELECT * FROM `"+NombreTablas.CORREOS.getValue()+"` ";
-        
-        if (StringValidation.validaDigitos(key)) {
-            query += "WHERE `id_correo` = "+key+" ";
-        } else {
-            query += "WHERE `correo` LIKE '%"+key+"%' ";
+        this.BUSCANDO = true;
+
+        String select = "SELECT * FROM `" + NombreTablas.CORREOS.getValue() + "` ";
+
+        boolean skey = consulta.isEmpty();
+        boolean sorigen = origen.isEmpty();
+        boolean sgrupo = grupo.isEmpty();
+
+        String query = null;
+        String[] querys = new String[4];
+
+        if (!skey) {
+            if (StringValidation.validaDigitos(consulta)) {
+                query = "`id_correo` = " + consulta + " ";
+            } else {
+                query = "`correo` LIKE '%" + consulta + "%' ";
+            }
+            querys[0] = query;
         }
-        
-        if (!origen.isEmpty()) {
-            query += "AND `id_origen` = "+new RegistraOrigen().getOrigenByName(origen).getId()+" ";
+
+        if (!sorigen) {
+            query = "`id_origen` = " + new RegistraOrigen().getOrigenByName(origen).getId() + " ";
+            querys[1] = query;
         }
-        
-        if (!grupo.isEmpty()) {
-            query += "AND `id_grupo` = "+new RegistraGrupo().getGrupoByName(grupo).getId()+" ";
+
+        if (!sgrupo) {
+            query = "`id_grupo` = " + new RegistraGrupo().getGrupoByName(grupo).getId() + " ";
+            querys[2] = query;
         }
-        
-        if (habilitado) {
-            query += "AND `habilitado` = '"+habilitado+"'";
+
+        querys[3] = "`habilitado` = '" + habilitado + "'";
+
+        boolean where = true;
+        String swhere = "";
+        for (int i = 0; i < querys.length; i++) {
+            if(querys[i] != null){
+                if(where){
+                    swhere = "WHERE ";
+                }else {
+                    swhere = "AND ";
+                } 
+                select += swhere+querys[i];
+                where = false;
+            }
         }
-        
-        query = query.trim()+";";
-        
-        ResultSet resultado = this.conexion.executeQuery(query);
+
+        ResultSet resultado = this.conexion.executeQuery(select);
         
         ArrayList<Correo> listaCorreos = new ArrayList<Correo>();
         
@@ -86,7 +138,22 @@ public class Buscador {
             }
         }
         
+        this.BUSCANDO = false;
+        
         return sresultado;
     }
-    
+
+    @Override
+    public void run() {
+        try {
+            this.label.setText("Buscando todas las coincidencias...");
+            String[][] respuesta = this.resultadoBusqueda();
+            this.tableModel = new DefaultTableModel(respuesta, NOMBRE_COLUMNAS);
+            this.tabla.setModel(tableModel);
+            this.label.setText("Se encontraron "+respuesta.length+" resultados.");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(Buscador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
