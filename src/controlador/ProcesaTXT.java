@@ -122,6 +122,7 @@ public class ProcesaTXT implements Runnable {
                     // SI el correo ya esta en la BD, incremento contador
                     if (correosBD.contains(correosNuevo)) {
                         cont_repetidos++;
+                        this.actualizaLoader();
                     } else {
                         // SI NO guardo en la base de datos
                         correo = new Correo(correosNuevo, origen, grupo, habilitado);
