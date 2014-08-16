@@ -5,8 +5,6 @@
  */
 package controlador;
 
-import com.mysql.jdbc.MySQLConnection;
-import helper.Benchmark;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,6 +45,9 @@ public class ProcesaTXT implements Runnable {
     private int total_correos;
     private int cont_repetidos;
     private int cont_nuevos;
+    
+    // Control del HILO
+    public boolean PROCESO;
 
     /**
      * Constructor
@@ -84,161 +85,78 @@ public class ProcesaTXT implements Runnable {
     }
 
     private void procesaTXT() throws SQLException {
-        ArrayList <String> CorreosNuevos = new ArrayList <String>();
-        ArrayList <String> CorreosDB = new ArrayList <String>();
-        ArrayList <String> CorreosBuenos = new ArrayList <String>();
-        
-        try {
-            BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta));
-            ResultSet respuesta;
-            String linea,query;
-            Correo correo;
-            
-            while ((linea=leer_archivo.readLine())!=null) {                
-                CorreosNuevos.add(linea);
-                total_correos++;
-            }
-            leer_archivo.close();
-            
-            //ELIMINAMOS REPETIDOS EN ARCHIVO NUEVO CON HashSet
-            HashSet<String> hashSet = new HashSet<String>(CorreosNuevos);
-            CorreosNuevos.clear();
-            CorreosNuevos.addAll(hashSet);
-            
-            query="SELECT `correo` FROM "+NombreTablas.CORREOS.getValue();
-            respuesta = this.conexion.executeQuery(query);
-            
-            while (respuesta.next()) {
-                CorreosDB.add(respuesta.getNString("correo"));
-            }
-            
-            int correosañadidos=0;
-            int total=0;
-            
-            if(CorreosDB.size()>0){
-                for (int i = 0; i < CorreosNuevos.size(); i++) {
-                    if(CorreosDB.contains(CorreosNuevos.get(i))){
-                        cont_repetidos++;
-                        //total=(cont_repetidos+correosañadidos);
-                        //System.err.println("Totales: "+total+" - Correos repetidos: "+cont_repetidos+" = "+CorreosNuevos.get(i));
-                        CorreosNuevos.set(i, "");
-                    }else{
-                        correosañadidos++;
-                        //total = (cont_repetidos + correosañadidos);
-                        //System.out.println("Totales: " + total + " - Correos nuevos: " + correosañadidos + " = " + CorreosNuevos.get(i));
-                        CorreosBuenos.add(CorreosNuevos.get(i));
-                    }
-                }
-            }
-            
-            if(CorreosBuenos.size()>0){
-                System.out.println("entre a correos buenos");
-                for (int i = 0; i < CorreosBuenos.size(); i++) {
-                    correo = new Correo(CorreosBuenos.get(i), origen, grupo, habilitado);
-                    if (registraCorreo.guardaCorreo(correo)) {
-                        cont_nuevos++;
-                        //System.out.println("Correos nuevos: " + cont_nuevos + " = " +CorreosBuenos.get(i));
-                        
-                        // Regla de 3 para porcentaje
-                        int procesados = cont_nuevos + cont_repetidos;
-                        int porcentaje = (procesados * 100) / total_correos;
+        // Creo arraylist necesarios
+        ArrayList<String> correosNuevos = new ArrayList<>();
+        ArrayList<String> correosBD = new ArrayList<>();
 
-                        // Actualizamos datos de la ventana
-                        vistaLoading.lblInfo.setText("Procesados " + procesados + " de " + total_correos);
-                        vistaLoading.pbProgreso.setValue(porcentaje);
-                        vistaLoading.lblCompletado.setText(porcentaje + "% completado...");
-                    }
+        try {
+            // Leo el archivo TXT y los agrego al arraylist
+            try (BufferedReader leerArchivo = new BufferedReader(new FileReader(ruta))) {
+                String linea;
+                while ((linea = leerArchivo.readLine()) != null) {
+                    correosNuevos.add(linea);
                 }
-            }else{
-                HashSet<String> hashSet2 = new HashSet<String>(CorreosNuevos);
-                CorreosNuevos.clear();
-                CorreosNuevos.addAll(hashSet2);
-                
-                for (int i = 0; i < CorreosNuevos.size(); i++) {
-                    
-                    if(!CorreosNuevos.get(i).equals("")){
-                        correo = new Correo(CorreosNuevos.get(i), origen, grupo, habilitado);
+            }
+            // Elimino los correos repetidos del arraylist generado del TXT
+            HashSet<String> hashSet = new HashSet<>(correosNuevos);
+            correosNuevos.clear();
+            correosNuevos.addAll(hashSet);
+
+            // Extrigo los correos de la base de datos
+            String query = "SELECT `correo` FROM " + NombreTablas.CORREOS.getValue();
+            ResultSet respuesta = this.conexion.executeQuery(query);
+
+            // SI hay correos en la BD, entonces los guardo en su arraylist
+            while (respuesta.next()) {
+                correosBD.add(respuesta.getNString("correo"));
+            }
+            
+            // Variables auxiliares
+            Correo correo;
+            total_correos = correosNuevos.size();
+            
+            // SI hay correos en la BD, comparo con los correos nuevos
+            // a insertar para evitar insertar repetidos
+            if (correosBD.size() > 0) {
+                for (String correosNuevo : correosNuevos) {
+                    // SI el correo ya esta en la BD, incremento contador
+                    if (correosBD.contains(correosNuevo)) {
+                        cont_repetidos++;
+                    } else {
+                        // SI NO guardo en la base de datos
+                        correo = new Correo(correosNuevo, origen, grupo, habilitado);
                         if (registraCorreo.guardaCorreo(correo)) {
                             cont_nuevos++;
-                            //System.out.println("Correos nuevos: " + cont_nuevos + " = " + CorreosNuevos.get(i));
-                            // Regla de 3 para porcentaje
-                            int procesados = cont_nuevos + cont_repetidos;
-                            int porcentaje = (procesados * 100) / total_correos;
-
-                            // Actualizamos datos de la ventana
-                            vistaLoading.lblInfo.setText("Procesados " + procesados + " de " + total_correos);
-                            vistaLoading.pbProgreso.setValue(porcentaje);
-                            vistaLoading.lblCompletado.setText(porcentaje + "% completado...");
-                        } 
+                            this.actualizaLoader();
+                        }
                     }
                 }
-            }  
-            
-        } catch (Exception e) {
+            } else {
+                // SI NO solo inserto desde el arraylist de archivos nuevos
+                for (String correoNuevo : correosNuevos) {
+                    correo = new Correo(correoNuevo, origen, grupo, habilitado);
+                    if (registraCorreo.guardaCorreo(correo)) {
+                        cont_nuevos++;
+                        this.actualizaLoader();
+                    }
+                }
+            }
+        } catch (IOException | SQLException e) {
             JOptionPane.showMessageDialog(vistaLoading, "Error : " + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        JOptionPane.showMessageDialog(vistaLoading, "Termino el proceso \r\n Correos repetidos: "+cont_repetidos+"\r\n Correos nuevos: "+cont_nuevos, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
+
         vistaLoading.dispose();
-        
-//
-//        long inicio = System.currentTimeMillis();
-//
-//        try {
-//            // INICIO PROCESO DE CONTAR TOTAL DE LINEAS -----------------------
-//            BufferedReader contadorLineas = new BufferedReader(new FileReader(ruta));
-//            //recorrido para saber el total de correos
-//            String linea;
-//            while ((linea = contadorLineas.readLine()) != null) {
-//                total_correos++;
-//            }
-//            contadorLineas.close();
-//            // TERMINO PROCESO DE CONTAR TOTAL DE LINEAS -----------------------
-//
-//            // INICIO PROCESO DE PROCESAR EL TXT -----------------------
-//            BufferedReader leer_archivo = new BufferedReader(new FileReader(ruta));
-//            Correo correo;
-//            while ((linea = leer_archivo.readLine()) != null) {
-//                linea = linea.trim();
-//                //PRIMERO VERIFICAMOS QUE EL CORREO NO SE ENCUENTRE REPETIDO
-//                if (registraCorreo.existeNombreCorreo(linea)) {
-//                    // Si es repetido
-//                    cont_repetidos++;
-//                    //System.err.println("Correos repetidos: " + cont_repetidos + " = " + linea);
-//                } else {
-//                    //SI NO SE CENCUENTRA REPETIDO LO INSERTAMOS
-//                    correo = new Correo(linea, origen, grupo, habilitado);
-//                    if (registraCorreo.guardaCorreo(correo)) {
-//                        cont_nuevos++;
-//                        //System.out.println("Correos nuevos: " + cont_nuevos + " = " + linea);
-//                    }
-//                }
-//                // Regla de 3 para porcentaje
-//                int procesados = cont_nuevos + cont_repetidos;
-//                int porcentaje = (procesados * 100) / total_correos;
-//
-//                // Actualizamos datos de la ventana
-//                vistaLoading.lblInfo.setText("Procesados " + procesados + " de " + total_correos);
-//                vistaLoading.pbProgreso.setValue(porcentaje);
-//                vistaLoading.lblCompletado.setText(porcentaje + "% completado...");
-//            }
-//            //cerrar el buffer
-//            leer_archivo.close();
-//            // TERMINO EL PROCESO DE PROCESAR EL TXT -----------------------
-//
-//            //System.out.println("Correos nuevos: " + cont_nuevos + " - Correos repetidos: " + cont_repetidos);
-//        } catch (IOException e) {
-//            JOptionPane.showMessageDialog(vistaLoading, "Error : " + e, "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//
-//        long termina = System.currentTimeMillis();
-//
-//        long totaltiempo = termina - inicio;
-//                      
-//        String mensaje = "Se han guardo " + cont_nuevos + " correos nuevos de " + total_correos + ". ("+Benchmark.calculaTiempo(totaltiempo)+")";
-//        
-//        JOptionPane.showMessageDialog(vistaLoading, mensaje, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
-//        vistaLoading.dispose();
+        JOptionPane.showMessageDialog(vistaLoading, "Termino el proceso. \r\n Correos repetidos: " + cont_repetidos + "\r\n Correos nuevos: " + cont_nuevos, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void actualizaLoader() {
+        // Regla de 3 para porcentaje
+        int procesados = cont_nuevos + cont_repetidos;
+        int porcentaje = (procesados * 100) / total_correos;
+        // Actualizamos datos de la ventana
+        vistaLoading.lblInfo.setText("Procesados " + procesados + " de " + total_correos);
+        vistaLoading.pbProgreso.setValue(porcentaje);
+        vistaLoading.lblCompletado.setText(porcentaje + "% completado...");
     }
 
     @Override

@@ -244,10 +244,13 @@ public class VistaCargar extends javax.swing.JDialog {
                     ProcesaTXT procesaTXT = ProcesaTXT.getInstance();
                     procesaTXT.setParametros(ruta, origen, grupo, cbxHabilitado.isSelected());
                     
+                    this.dispose();
+                    
                     VistaLoading vistaLoading = new VistaLoading(null, true);
                     vistaLoading.setProceso("importa");
                     vistaLoading.setLocationRelativeTo(null);
                     vistaLoading.setVisible(true);
+                    
                     
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
                     JOptionPane.showMessageDialog(this, "ERROR: " + e + ".", "Error", JOptionPane.ERROR_MESSAGE);

@@ -16,6 +16,8 @@ import java.util.logging.Logger;
  * @author Diego
  */
 public class VistaLoading extends javax.swing.JDialog {
+    
+    private Thread hiloTrabajaCorreos;
 
     /**
      * Creates new form VistaLoading
@@ -30,10 +32,13 @@ public class VistaLoading extends javax.swing.JDialog {
     }
 
     public void setProceso(String proceso){
-        if(proceso.equals("importa")){
-            initThreadImporta();
-        }else if(proceso.equals("exporta")){
-            initThreadExporta();
+        switch (proceso) {
+            case "importa":
+                initThreadImporta();
+                break;
+            case "exporta":
+                initThreadExporta();
+                break;
         }
     }
     private void initThreadImporta() {
@@ -41,8 +46,8 @@ public class VistaLoading extends javax.swing.JDialog {
             ProcesaTXT procesaTXT = ProcesaTXT.getInstance();
             procesaTXT.setVistaLoading(this);
             //metodo correra el hilo de ProcesaTXT
-            Thread procesaCorreos = new Thread(procesaTXT);
-            procesaCorreos.start();
+            hiloTrabajaCorreos = new Thread(procesaTXT);
+            hiloTrabajaCorreos.start();
             
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(VistaLoading.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,8 +59,8 @@ public class VistaLoading extends javax.swing.JDialog {
             ExportaTXT exportaTXT = ExportaTXT.getInstance();
             exportaTXT.setVistaLoading(this);
             //metodo correra el hilo de ProcesaTXT
-            Thread exportaCorreos = new Thread(exportaTXT);
-            exportaCorreos.start();
+            hiloTrabajaCorreos = new Thread(exportaTXT);
+            hiloTrabajaCorreos.start();
             
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(VistaLoading.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,6 +99,11 @@ public class VistaLoading extends javax.swing.JDialog {
         jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,6 +162,14 @@ public class VistaLoading extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        if(hiloTrabajaCorreos.isAlive()){
+            hiloTrabajaCorreos.interrupt();
+            hiloTrabajaCorreos = null;
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
