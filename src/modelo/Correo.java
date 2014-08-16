@@ -73,5 +73,15 @@ public class Correo {
         this.habilitado = habilitado;
     }
     
+    public String[] toArray() {
+        return new String[]{
+            id+"",
+            nombre,
+            origen.getNombre(),
+            grupo.getNombre(),
+            habilitado+""
+        };
+    }
+    
     
 }

@@ -108,4 +108,11 @@ public class RegistraCorreo {
         respuesta.close();
         return existe;
     }
+    
+    public boolean eliminarCorreoByID(String ID) throws SQLException {
+        String query = "DELETE FROM "+NombreTablas.CORREOS.getValue()+" WHERE `id_correo` = "+ID;
+        int respuesta = this.conexion.executeUpdate(query);
+        
+        return (respuesta==1);
+    }
 }

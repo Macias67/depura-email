@@ -10,13 +10,14 @@ import controlador.ExportaTXT;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Diego
  */
 public class VistaLoading extends javax.swing.JDialog {
-    
+
     private Thread hiloTrabajaCorreos;
 
     /**
@@ -31,7 +32,7 @@ public class VistaLoading extends javax.swing.JDialog {
         initComponents();
     }
 
-    public void setProceso(String proceso){
+    public void setProceso(String proceso) {
         switch (proceso) {
             case "importa":
                 initThreadImporta();
@@ -41,6 +42,7 @@ public class VistaLoading extends javax.swing.JDialog {
                 break;
         }
     }
+
     private void initThreadImporta() {
         try {
             ProcesaTXT procesaTXT = ProcesaTXT.getInstance();
@@ -48,20 +50,20 @@ public class VistaLoading extends javax.swing.JDialog {
             //metodo correra el hilo de ProcesaTXT
             hiloTrabajaCorreos = new Thread(procesaTXT);
             hiloTrabajaCorreos.start();
-            
+
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(VistaLoading.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void initThreadExporta(){
+
+    private void initThreadExporta() {
         try {
             ExportaTXT exportaTXT = ExportaTXT.getInstance();
             exportaTXT.setVistaLoading(this);
             //metodo correra el hilo de ProcesaTXT
             hiloTrabajaCorreos = new Thread(exportaTXT);
             hiloTrabajaCorreos.start();
-            
+
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(VistaLoading.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -164,10 +166,20 @@ public class VistaLoading extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        if(hiloTrabajaCorreos.isAlive()){
-            hiloTrabajaCorreos.interrupt();
-            hiloTrabajaCorreos = null;
+        try {
+            // TODO add your handling code here:
+            ProcesaTXT procesaTXT = ProcesaTXT.getInstance();
+            procesaTXT.PROCESO = false;
+
+            hiloTrabajaCorreos.stop();
+            this.dispose();
+
+            int total = procesaTXT.cont_nuevos + procesaTXT.cont_repetidos;
+            JOptionPane.showMessageDialog(this, "Se procesaron solo " + total + " correos de " + procesaTXT.total_correos + ".", "Proceso truncado", JOptionPane.WARNING_MESSAGE);
+            procesaTXT.resetInstance();
+            
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(VistaLoading.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 

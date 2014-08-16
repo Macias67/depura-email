@@ -24,31 +24,31 @@ import modelo.Origen;
  *
  * @author Macias
  */
-public class Buscador implements Runnable{
+public class Buscador implements Runnable {
 
     private final MysqlConnect conexion;
     private DefaultTableModel tableModel;
     private JLabel label;
     private JTable tabla;
-    
+
     public static final String[] NOMBRE_COLUMNAS = {"ID", "Correo", "Origen", "Grupo", "Habilitado"};
-    
+
     private String consulta;
     private String origen;
     private String grupo;
     private boolean habilitado;
-    
+
     public boolean BUSCANDO = false;
 
     public Buscador() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         this.conexion = MysqlConnect.getConnection();
     }
-    
+
     public void setDataTable(JLabel label, JTable tabla) {
         this.label = label;
         this.tabla = tabla;
     }
-    
+
     public void setParamBusqueda(String key, String origen, String grupo, boolean habilitado) {
         this.consulta = key;
         this.origen = origen;
@@ -58,7 +58,7 @@ public class Buscador implements Runnable{
 
     private synchronized String[][] resultadoBusqueda()
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        
+
         this.BUSCANDO = true;
 
         String select = "SELECT * FROM `" + NombreTablas.CORREOS.getValue() + "` ";
@@ -94,52 +94,47 @@ public class Buscador implements Runnable{
         boolean where = true;
         String swhere = "";
         for (int i = 0; i < querys.length; i++) {
-            if(querys[i] != null){
-                if(where){
+            if (querys[i] != null) {
+                if (where) {
                     swhere = "WHERE ";
-                }else {
+                } else {
                     swhere = "AND ";
-                } 
-                select += swhere+querys[i];
+                }
+                select += swhere + querys[i];
                 where = false;
             }
         }
 
         ResultSet resultado = this.conexion.executeQuery(select);
-        
+        select = null;
+
         ArrayList<Correo> listaCorreos = new ArrayList<Correo>();
-        
+
         while (resultado.next()) {
             int id = resultado.getInt("id_correo");
             String correo = resultado.getNString("correo");
             Origen corigen = new RegistraOrigen().getOrigenByID(resultado.getInt("id_origen"));
             Grupo cgrupo = new RegistraGrupo().getGrupoByID(resultado.getInt("id_grupo"));
             boolean chabilitado = Boolean.parseBoolean(resultado.getNString("habilitado"));
-            
+
             listaCorreos.add(new Correo(id, correo, corigen, cgrupo, chabilitado));
         }
         
+
         int totalCorreos = listaCorreos.size();
-        
-        
+
         String[][] sresultado = null;
-        
+
         if (totalCorreos > 0) {
             sresultado = new String[totalCorreos][5];
             for (int i = 0; i < totalCorreos; i++) {
-                    
-                    Correo rcorreo = listaCorreos.get(i);
-                    
-                    sresultado[i][0] = rcorreo.getId()+"";
-                    sresultado[i][1] = rcorreo.getNombre();
-                    sresultado[i][2] = rcorreo.getOrigen().getNombre();
-                    sresultado[i][3] = rcorreo.getGrupo().getNombre();
-                    sresultado[i][4] = rcorreo.isHabilitado()+"";
+                sresultado[i] = listaCorreos.get(i).toArray();
             }
         }
-        
+
         this.BUSCANDO = false;
-        
+        listaCorreos.clear();
+
         return sresultado;
     }
 
@@ -150,7 +145,12 @@ public class Buscador implements Runnable{
             String[][] respuesta = this.resultadoBusqueda();
             this.tableModel = new DefaultTableModel(respuesta, NOMBRE_COLUMNAS);
             this.tabla.setModel(tableModel);
-            this.label.setText("Se encontraron "+respuesta.length+" resultados.");
+
+            String mensaje = (respuesta == null) ? "No se encontraron resultados"
+                    : "Se encontraron " + respuesta.length + " resultados.";
+
+            this.label.setText(mensaje);
+
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
             Logger.getLogger(Buscador.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -42,10 +42,10 @@ public class ProcesaTXT implements Runnable {
     private VistaLoading vistaLoading;
 
     // Contadores
-    private int total_correos;
-    private int cont_repetidos;
-    private int cont_nuevos;
-    
+    public int total_correos;
+    public int cont_repetidos;
+    public int cont_nuevos;
+
     // Control del HILO
     public boolean PROCESO;
 
@@ -85,6 +85,10 @@ public class ProcesaTXT implements Runnable {
     }
 
     private void procesaTXT() throws SQLException {
+
+        // INICIO BANDERA DE PROCESO
+        this.PROCESO = true;
+
         // Creo arraylist necesarios
         ArrayList<String> correosNuevos = new ArrayList<>();
         ArrayList<String> correosBD = new ArrayList<>();
@@ -96,7 +100,9 @@ public class ProcesaTXT implements Runnable {
                 while ((linea = leerArchivo.readLine()) != null) {
                     correosNuevos.add(linea);
                 }
+                leerArchivo.close();
             }
+
             // Elimino los correos repetidos del arraylist generado del TXT
             HashSet<String> hashSet = new HashSet<>(correosNuevos);
             correosNuevos.clear();
@@ -110,33 +116,33 @@ public class ProcesaTXT implements Runnable {
             while (respuesta.next()) {
                 correosBD.add(respuesta.getNString("correo"));
             }
-            
+
             // Variables auxiliares
             Correo correo;
             total_correos = correosNuevos.size();
-            
+
             // SI hay correos en la BD, comparo con los correos nuevos
             // a insertar para evitar insertar repetidos
             if (correosBD.size() > 0) {
-                for (String correosNuevo : correosNuevos) {
+                for (String correoNuevo : correosNuevos) {
                     // SI el correo ya esta en la BD, incremento contador
-                    if (correosBD.contains(correosNuevo)) {
+                    if (PROCESO && correosBD.contains(correoNuevo)) {
                         cont_repetidos++;
-                        this.actualizaLoader();
                     } else {
-                        // SI NO guardo en la base de datos
-                        correo = new Correo(correosNuevo, origen, grupo, habilitado);
-                        if (registraCorreo.guardaCorreo(correo)) {
+                        // SI NO solo guardo en la base de datos
+                        correo = new Correo(correoNuevo, origen, grupo, habilitado);
+                        if (PROCESO && registraCorreo.guardaCorreo(correo)) {
                             cont_nuevos++;
-                            this.actualizaLoader();
                         }
                     }
+                    // Actulizo vista del loader
+                    this.actualizaLoader();
                 }
             } else {
                 // SI NO solo inserto desde el arraylist de archivos nuevos
                 for (String correoNuevo : correosNuevos) {
                     correo = new Correo(correoNuevo, origen, grupo, habilitado);
-                    if (registraCorreo.guardaCorreo(correo)) {
+                    if (PROCESO && registraCorreo.guardaCorreo(correo)) {
                         cont_nuevos++;
                         this.actualizaLoader();
                     }
@@ -144,6 +150,9 @@ public class ProcesaTXT implements Runnable {
             }
         } catch (IOException | SQLException e) {
             JOptionPane.showMessageDialog(vistaLoading, "Error : " + e, "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            correosBD.clear();
+            correosNuevos.clear();
         }
 
         vistaLoading.dispose();

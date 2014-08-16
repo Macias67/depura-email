@@ -71,6 +71,8 @@ public class VistaCargar extends javax.swing.JDialog {
         btnProcesar = new javax.swing.JButton();
         cbxHabilitado = new javax.swing.JCheckBox();
 
+        setTitle("Cargar archivo txt");
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cargar TXT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         jLabel1.setText("Ruta del archivo:");

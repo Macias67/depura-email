@@ -47,6 +47,10 @@ public class Principal extends javax.swing.JFrame {
             buscador = new Buscador();
             
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            if (ex instanceof SQLException) {
+                JOptionPane.showMessageDialog(this, "Verifique que tenga iniciado el servidor MySQL y reinicie de nuevo la aplicación.", "Error de conexión a MySQL", JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
+            }
             Logger.getLogger(VistaCargar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -103,6 +107,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Depura Email");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
@@ -116,12 +121,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setText("Grupo:");
 
         cbxHabilitado.setSelected(true);
-        cbxHabilitado.setText("Inabilitados");
-        cbxHabilitado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxHabilitadoActionPerformed(evt);
-            }
-        });
+        cbxHabilitado.setText("Habilitados");
 
         tfBusqueda.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
@@ -134,6 +134,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -306,14 +311,6 @@ public class Principal extends javax.swing.JFrame {
         vistaEliminar.setVisible(true);
     }//GEN-LAST:event_menu_eliminarActionPerformed
 
-    private void cbxHabilitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxHabilitadoActionPerformed
-        if (cbxHabilitado.isSelected()) {
-            cbxHabilitado.setText("Habilitados");
-        } else {
-            cbxHabilitado.setText("Inhabilitados");
-        }
-    }//GEN-LAST:event_cbxHabilitadoActionPerformed
-
     private void menuItemCorreosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCorreosActionPerformed
         // TODO add your handling code here:
         vistaEditar = new VistaEditar(this, true);
@@ -344,6 +341,15 @@ public class Principal extends javax.swing.JFrame {
         vistaExportar.setLocationRelativeTo(this);
         vistaExportar.setVisible(true);
     }//GEN-LAST:event_menu_exportarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        tfBusqueda.setText("");
+        selectOrigen.setSelectedIndex(0);
+        selectGrupo.setSelectedIndex(0);
+        cbxHabilitado.setSelected(true);
+        this.initTable();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
     /**
