@@ -79,7 +79,7 @@ public class Correo {
             nombre,
             origen.getNombre(),
             grupo.getNombre(),
-            habilitado+""
+            (habilitado) ? "SI" : "NO"
         };
     }
     

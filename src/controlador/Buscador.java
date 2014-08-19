@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Correo;
@@ -62,6 +63,7 @@ public class Buscador implements Runnable {
         this.BUSCANDO = true;
 
         String select = "SELECT * FROM `" + NombreTablas.CORREOS.getValue() + "` ";
+        String count = "SELECT COUNT(*) FROM `" + NombreTablas.CORREOS.getValue() + "` ";
 
         boolean skey = consulta.isEmpty();
         boolean sorigen = origen.isEmpty();
@@ -101,14 +103,29 @@ public class Buscador implements Runnable {
                     swhere = "AND ";
                 }
                 select += swhere + querys[i];
+                count += swhere + querys[i];
                 where = false;
             }
         }
 
+        
+        ResultSet res_count = this.conexion.executeQuery(count);
+        count = null;
+        
+        res_count.next();
+        int num_resultados=res_count.getInt(1);
+        
+        if(num_resultados>5000){
+            select+=" LIMIT 5000";
+            System.out.println(select);
+            JOptionPane.showMessageDialog(null, num_resultados+" Resultados \r\n -Solo se muestran los primeros 5,000 \r\n -Intenta una busqueda mas especifica","Demaciados resultados", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
         ResultSet resultado = this.conexion.executeQuery(select);
         select = null;
 
         ArrayList<Correo> listaCorreos = new ArrayList<Correo>();
+        
 
         while (resultado.next()) {
             int id = resultado.getInt("id_correo");
