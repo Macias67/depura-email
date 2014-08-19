@@ -117,7 +117,6 @@ public class Buscador implements Runnable {
         
         if(num_resultados>5000){
             select+=" LIMIT 5000";
-            System.out.println(select);
             JOptionPane.showMessageDialog(null, num_resultados+" Resultados \r\n -Solo se muestran los primeros 5,000 \r\n -Intenta una busqueda mas especifica","Demaciados resultados", JOptionPane.INFORMATION_MESSAGE);
         }
         

@@ -6,9 +6,11 @@
 package vistas;
 
 import controlador.Buscador;
+import java.awt.Image;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.MyComboBoxModel;
@@ -34,6 +36,7 @@ public class Principal extends javax.swing.JFrame {
      */
     private Principal() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("../assets/email.png")).getImage());
         init();
         initTable();
     }
