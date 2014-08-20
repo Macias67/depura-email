@@ -36,7 +36,7 @@ public class Principal extends javax.swing.JFrame {
      */
     private Principal() {
         initComponents();
-        this.setIconImage(new ImageIcon(getClass().getResource("../assets/email.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/assets/email.gif")).getImage());
         init();
         initTable();
     }
