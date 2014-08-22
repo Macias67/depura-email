@@ -1,5 +1,5 @@
 #ant specific
-dist/
+#dist/
 build/
 
 #netbeans specific
