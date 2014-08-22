@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 public class VistaLoading extends javax.swing.JDialog {
 
     private Thread hiloTrabajaCorreos;
+    public static final byte IMPORTA=1;
+    public static final byte EXPORTA=2;
 
     /**
      * Creates new form VistaLoading
@@ -32,12 +34,12 @@ public class VistaLoading extends javax.swing.JDialog {
         initComponents();
     }
 
-    public void setProceso(String proceso) {
+    public void setProceso(byte proceso) {
         switch (proceso) {
-            case "importa":
+            case IMPORTA:
                 initThreadImporta();
                 break;
-            case "exporta":
+            case EXPORTA:
                 initThreadExporta();
                 break;
         }

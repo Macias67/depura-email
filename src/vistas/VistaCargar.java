@@ -249,7 +249,7 @@ public class VistaCargar extends javax.swing.JDialog {
                     this.dispose();
                     
                     VistaLoading vistaLoading = new VistaLoading(null, true);
-                    vistaLoading.setProceso("importa");
+                    vistaLoading.setProceso(VistaLoading.IMPORTA);
                     vistaLoading.setLocationRelativeTo(null);
                     vistaLoading.setVisible(true);
                     

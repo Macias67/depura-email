@@ -95,15 +95,15 @@ public class Buscador implements Runnable {
 
         boolean where = true;
         String swhere = "";
-        for (int i = 0; i < querys.length; i++) {
-            if (querys[i] != null) {
+        for (String query1 : querys) {
+            if (query1 != null) {
                 if (where) {
                     swhere = "WHERE ";
                 } else {
                     swhere = "AND ";
                 }
-                select += swhere + querys[i];
-                count += swhere + querys[i];
+                select += swhere + query1;
+                count += swhere + query1;
                 where = false;
             }
         }
@@ -123,7 +123,7 @@ public class Buscador implements Runnable {
         ResultSet resultado = this.conexion.executeQuery(select);
         select = null;
 
-        ArrayList<Correo> listaCorreos = new ArrayList<Correo>();
+        ArrayList<Correo> listaCorreos = new ArrayList<>();
         
 
         while (resultado.next()) {

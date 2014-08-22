@@ -214,11 +214,11 @@ public class VistaExportar extends javax.swing.JDialog {
                     exportaTXT.setParametros("origen-grupo", NombreArchivo, origen, grupo);
 
                     VistaLoading vistaLoading = new VistaLoading(null, true);
-                    vistaLoading.setProceso("exporta");
+                    vistaLoading.setProceso(VistaLoading.EXPORTA);
                     vistaLoading.setLocationRelativeTo(null);
                     vistaLoading.setVisible(true);
 
-                } catch (Exception e) {
+                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
                     JOptionPane.showMessageDialog(this, "ERROR: " + e + ".", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }else{
@@ -238,7 +238,7 @@ public class VistaExportar extends javax.swing.JDialog {
                 exportaTXT.setParametros("todos",NombreArchivo ,null, null);
 
                 VistaLoading vistaLoading = new VistaLoading(null, true);
-                vistaLoading.setProceso("exporta");
+                vistaLoading.setProceso(VistaLoading.EXPORTA);
                 vistaLoading.setLocationRelativeTo(null);
                 vistaLoading.setVisible(true);
 

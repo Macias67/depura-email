@@ -215,6 +215,8 @@ public class VistaEliminar extends javax.swing.JDialog {
                     Logger.getLogger(VistaEliminar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Busca un correo primero.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 

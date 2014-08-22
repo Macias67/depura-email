@@ -7,8 +7,7 @@ package main;
 
 import vistas.Principal;
 /**
- *
- * @author Macias
+ * @author Luis Macias | Diego Rodriguez
  */
 public class Main {
 

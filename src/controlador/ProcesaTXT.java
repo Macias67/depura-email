@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import helper.StringValidation;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -97,8 +98,10 @@ public class ProcesaTXT implements Runnable {
             // Leo el archivo TXT y los agrego al arraylist
             try (BufferedReader leerArchivo = new BufferedReader(new FileReader(ruta))) {
                 String linea;
-                while ((linea = leerArchivo.readLine()) != null) {
-                    correosNuevos.add(linea);
+                while ((linea = leerArchivo.readLine())!= null) {
+                    if(!(linea.trim()).equals("")){
+                        correosNuevos.add(linea);
+                    }
                 }
                 leerArchivo.close();
             }
@@ -129,8 +132,10 @@ public class ProcesaTXT implements Runnable {
                     if (PROCESO && correosBD.contains(correoNuevo)) {
                         cont_repetidos++;
                     } else {
+                        boolean chabilitado = (StringValidation.validaCorreo(correoNuevo)) ? habilitado : false;
+
                         // SI NO solo guardo en la base de datos
-                        correo = new Correo(correoNuevo, origen, grupo, habilitado);
+                        correo = new Correo(correoNuevo, origen, grupo, chabilitado);
                         if (PROCESO && registraCorreo.guardaCorreo(correo)) {
                             cont_nuevos++;
                         }
@@ -141,7 +146,9 @@ public class ProcesaTXT implements Runnable {
             } else {
                 // SI NO solo inserto desde el arraylist de archivos nuevos
                 for (String correoNuevo : correosNuevos) {
-                    correo = new Correo(correoNuevo, origen, grupo, habilitado);
+                    boolean chabilitado = (StringValidation.validaCorreo(correoNuevo)) ? habilitado : false;
+                    
+                    correo = new Correo(correoNuevo, origen, grupo, chabilitado);
                     if (PROCESO && registraCorreo.guardaCorreo(correo)) {
                         cont_nuevos++;
                         this.actualizaLoader();

@@ -1,9 +1,11 @@
 package controlador;
 
 
+import java.awt.HeadlessException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -161,19 +163,9 @@ public class ExportaTXT implements Runnable{
             if(band==true){
                 JOptionPane.showMessageDialog(vistaLoading, "Exportación finalizada, nuevo documento : \r\n"+ruta_escritorio+NombreArchivo, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);   
             }
-        } catch (Exception e) {
+        } catch (HeadlessException | IOException | SQLException e) {
             JOptionPane.showMessageDialog(null, "ERROR: " + e + ".", "Error", JOptionPane.ERROR_MESSAGE);
         }
-//        long inicio = System.currentTimeMillis();
-        
-//        long termina = System.currentTimeMillis();
-//
-//        long totaltiempo = termina - inicio;
-//                      
-//        String mensaje = "Se han guardo " + cont_nuevos + " correos nuevos de " + total_correos + ". ("+Benchmark.calculaTiempo(totaltiempo)+")";
-//        
-//        JOptionPane.showMessageDialog(vistaLoading, mensaje, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
-//        vistaLoading.dispose();
     }
     
     

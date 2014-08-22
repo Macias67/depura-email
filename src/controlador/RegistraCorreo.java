@@ -105,7 +105,6 @@ public class RegistraCorreo {
         ResultSet respuesta = this.conexion.executeQuery(query);
 
         boolean existe = respuesta.next();
-        respuesta.close();
         return existe;
     }
     

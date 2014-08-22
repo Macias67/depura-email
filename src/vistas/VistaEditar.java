@@ -8,7 +8,6 @@ package vistas;
 import controlador.RegistraCorreo;
 import controlador.RegistraGrupo;
 import controlador.RegistraOrigen;
-import helper.StringValidation;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -323,47 +322,42 @@ public class VistaEditar extends javax.swing.JDialog {
         // TODO add your handling code here:
         String correo = tfCorreo.getText();
 
-        //VERIFICACION DE QUE SEA UN CORREO VALIDO
-        if (StringValidation.validaCorreo(correo)) {
-            try {
-                //SE CREA OBJET Y SE INICIAN VARIABLES INDEPENDIENTEMENTE DE SI ES NUEVO O ACTUALIZACION
-                RegistraCorreo registraCorreo = new RegistraCorreo();
-                
-                String sorigen = (String) selectOrigen.getSelectedItem();
-                String sgrupo = (String) selectGrupo.getSelectedItem();
-                boolean habilitado = cbxHabilitado.isSelected();
+        try {
+            //SE CREA OBJETO Y SE INICIAN VARIABLES INDEPENDIENTEMENTE DE SI ES NUEVO O ACTUALIZACION
+            RegistraCorreo registraCorreo = new RegistraCorreo();
 
-                Origen origen = new RegistraOrigen().getOrigenByName(sorigen);
-                Grupo grupo = new RegistraGrupo().getGrupoByName(sgrupo);
+            String sorigen = (String) selectOrigen.getSelectedItem();
+            String sgrupo = (String) selectGrupo.getSelectedItem();
+            boolean habilitado = cbxHabilitado.isSelected();
 
-                Correo nuevo = new Correo(correo, origen, grupo, habilitado);
+            Origen origen = new RegistraOrigen().getOrigenByName(sorigen);
+            Grupo grupo = new RegistraGrupo().getGrupoByName(sgrupo);
 
-                //VERIFICACION SI SE TRATA DE ACTUALIZACION O CORREO NUEVO
-                if (correoActual.getNombre().equals(correo)) {
-                    if (registraCorreo.editarCorreo("actualizar", correoActual, nuevo)) {
-                        JOptionPane.showMessageDialog(this, "El correo ha sido actualizado.", "Correo actualizado", JOptionPane.INFORMATION_MESSAGE);
+            Correo nuevo = new Correo(correo, origen, grupo, habilitado);
+
+            //VERIFICACION SI SE TRATA DE ACTUALIZACION O CORREO NUEVO
+            if (correoActual.getNombre().equals(correo)) {
+                if (registraCorreo.editarCorreo("actualizar", correoActual, nuevo)) {
+                    JOptionPane.showMessageDialog(this, "El correo ha sido actualizado.", "Correo actualizado", JOptionPane.INFORMATION_MESSAGE);
+                    reiniciarComponentes();
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se edito el correo.", "No se edito el correo", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                //SI ES NUEVO CORREO VERIFICAMOS QUE NO SEA UNO YA EXISTENTE
+                if (!registraCorreo.existeNombreCorreo(correo)) {
+                    if (registraCorreo.editarCorreo("nuevo", correoActual, nuevo)) {
+                        JOptionPane.showMessageDialog(this, "El correo ha sido editado.", "Correo editado", JOptionPane.INFORMATION_MESSAGE);
                         reiniciarComponentes();
                     } else {
                         JOptionPane.showMessageDialog(this, "No se edito el correo.", "No se edito el correo", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    //SI ES NUEVO CORREO VERIFICAMOS QUE NO SEA UNO YA EXISTENTE
-                    if (!registraCorreo.existeNombreCorreo(correo)) {
-                        if (registraCorreo.editarCorreo("nuevo", correoActual, nuevo)) {
-                            JOptionPane.showMessageDialog(this, "El correo ha sido editado.", "Correo editado", JOptionPane.INFORMATION_MESSAGE);
-                            reiniciarComponentes();
-                        } else {
-                            JOptionPane.showMessageDialog(this, "No se edito el correo.", "No se edito el correo", JOptionPane.ERROR_MESSAGE);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Ya existe ese nombre de correo", "Ya existe correo", JOptionPane.ERROR_MESSAGE);
-                    }
+                    JOptionPane.showMessageDialog(this, "Ya existe ese nombre de correo", "Ya existe correo", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-                Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Escribe un correo válido", "Error de correo", JOptionPane.ERROR_MESSAGE);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            Logger.getLogger(VistaEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

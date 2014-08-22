@@ -6,7 +6,6 @@
 package vistas;
 
 import controlador.Buscador;
-import java.awt.Image;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
