@@ -7,11 +7,16 @@ package controlador;
 
 import helper.StringValidation;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,13 +30,15 @@ import vistas.VistaLoading;
 
 /**
  *
- * @author Macias
+ * @author Macias | Diego
  */
 public class ProcesaTXT implements Runnable {
 
     private static ProcesaTXT instance;
     private final RegistraCorreo registraCorreo;
     private final MysqlConnect conexion;
+    private final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private final DateFormat hourFormat = new SimpleDateFormat("HH_mm_ss");
 
     // Parametros para correo
     private String ruta;
@@ -100,7 +107,7 @@ public class ProcesaTXT implements Runnable {
                 String linea;
                 while ((linea = leerArchivo.readLine())!= null) {
                     if(!(linea.trim()).equals("")){
-                        correosNuevos.add(linea);
+                        correosNuevos.add(linea.trim());
                     }
                 }
                 leerArchivo.close();
@@ -123,21 +130,26 @@ public class ProcesaTXT implements Runnable {
             // Variables auxiliares
             Correo correo;
             total_correos = correosNuevos.size();
+            BufferedWriter correosInvalidos = new BufferedWriter(new FileWriter(System.getProperty("user.home")+"\\Desktop\\Correos_invalidos_"+dateFormat.format(new Date())+" "+hourFormat.format(new Date())+".txt"));
 
             // SI hay correos en la BD, comparo con los correos nuevos
             // a insertar para evitar insertar repetidos
             if (correosBD.size() > 0) {
                 for (String correoNuevo : correosNuevos) {
-                    // SI el correo ya esta en la BD, incremento contador
-                    if (PROCESO && correosBD.contains(correoNuevo)) {
-                        cont_repetidos++;
+                    // Si el correo no es valido se guarda en un txt aparte
+                    if (!StringValidation.validaCorreo(correoNuevo)) {
+                        correosInvalidos.write(correoNuevo+"\r\n");
+                        cont_nuevos++;
                     } else {
-                        boolean chabilitado = (StringValidation.validaCorreo(correoNuevo)) ? habilitado : false;
-
-                        // SI NO solo guardo en la base de datos
-                        correo = new Correo(correoNuevo, origen, grupo, chabilitado);
-                        if (PROCESO && registraCorreo.guardaCorreo(correo)) {
-                            cont_nuevos++;
+                        // SI el correo ya esta en la BD, incremento contador
+                        if (PROCESO && correosBD.contains(correoNuevo)) {
+                            cont_repetidos++;
+                        } else {
+                            // SI NO solo guardo en la base de datos
+                            correo = new Correo(correoNuevo, origen, grupo, habilitado);
+                            if (PROCESO && registraCorreo.guardaCorreo(correo)) {
+                                cont_nuevos++;
+                            }
                         }
                     }
                     // Actulizo vista del loader
@@ -146,15 +158,21 @@ public class ProcesaTXT implements Runnable {
             } else {
                 // SI NO solo inserto desde el arraylist de archivos nuevos
                 for (String correoNuevo : correosNuevos) {
-                    boolean chabilitado = (StringValidation.validaCorreo(correoNuevo)) ? habilitado : false;
-                    
-                    correo = new Correo(correoNuevo, origen, grupo, chabilitado);
-                    if (PROCESO && registraCorreo.guardaCorreo(correo)) {
+                    // Si el correo no es valido se guarda en un txt aparte
+                    if (!StringValidation.validaCorreo(correoNuevo)) {
+                        correosInvalidos.write(correoNuevo+"\r\n");
                         cont_nuevos++;
-                        this.actualizaLoader();
+                    } else {
+                        correo = new Correo(correoNuevo, origen, grupo, habilitado);
+                        if (PROCESO && registraCorreo.guardaCorreo(correo)) {
+                            cont_nuevos++;
+                            this.actualizaLoader();
+                        }
                     }
                 }
             }
+            
+            correosInvalidos.close();
         } catch (IOException | SQLException e) {
             JOptionPane.showMessageDialog(vistaLoading, "Error : " + e, "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
