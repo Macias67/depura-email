@@ -53,6 +53,7 @@ public class ProcesaTXT implements Runnable {
     public int total_correos;
     public int cont_repetidos;
     public int cont_nuevos;
+    public int cont_invalidos;
 
     // Control del HILO
     public boolean PROCESO;
@@ -130,7 +131,8 @@ public class ProcesaTXT implements Runnable {
             // Variables auxiliares
             Correo correo;
             total_correos = correosNuevos.size();
-            BufferedWriter correosInvalidos = new BufferedWriter(new FileWriter(System.getProperty("user.home")+"\\Desktop\\Correos_invalidos_"+dateFormat.format(new Date())+" "+hourFormat.format(new Date())+".txt"));
+            String ruta_invalidos=System.getProperty("user.home")+"\\Desktop\\Correos_invalidos_"+dateFormat.format(new Date())+" "+hourFormat.format(new Date())+".txt";
+            BufferedWriter correosInvalidos = new BufferedWriter(new FileWriter(ruta_invalidos));
 
             // SI hay correos en la BD, comparo con los correos nuevos
             // a insertar para evitar insertar repetidos
@@ -139,7 +141,7 @@ public class ProcesaTXT implements Runnable {
                     // Si el correo no es valido se guarda en un txt aparte
                     if (!StringValidation.validaCorreo(correoNuevo)) {
                         correosInvalidos.write(correoNuevo+"\r\n");
-                        cont_nuevos++;
+                        cont_invalidos++;
                     } else {
                         // SI el correo ya esta en la BD, incremento contador
                         if (PROCESO && correosBD.contains(correoNuevo)) {
@@ -161,7 +163,7 @@ public class ProcesaTXT implements Runnable {
                     // Si el correo no es valido se guarda en un txt aparte
                     if (!StringValidation.validaCorreo(correoNuevo)) {
                         correosInvalidos.write(correoNuevo+"\r\n");
-                        cont_nuevos++;
+                        cont_invalidos++;
                     } else {
                         correo = new Correo(correoNuevo, origen, grupo, habilitado);
                         if (PROCESO && registraCorreo.guardaCorreo(correo)) {
@@ -181,12 +183,12 @@ public class ProcesaTXT implements Runnable {
         }
 
         vistaLoading.dispose();
-        JOptionPane.showMessageDialog(vistaLoading, "Termino el proceso. \r\n Correos repetidos: " + cont_repetidos + "\r\n Correos nuevos: " + cont_nuevos, "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(vistaLoading, "Termino el proceso.\r\n"+"\r\n Total de correos: " + total_correos +"\r\n Correos repetidos: " + cont_repetidos + "\r\n Correos nuevos: " + cont_nuevos + "\r\n Correos no validos: " + cont_invalidos + "\r\n \r\n Nota: Los correos no validos \r\n se guardan en un txt en el escritorio", "Fin del proceso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void actualizaLoader() {
         // Regla de 3 para porcentaje
-        int procesados = cont_nuevos + cont_repetidos;
+        int procesados = cont_nuevos + cont_repetidos + cont_invalidos;
         int porcentaje = (procesados * 100) / total_correos;
         // Actualizamos datos de la ventana
         vistaLoading.lblInfo.setText("Procesados " + procesados + " de " + total_correos);
