@@ -131,7 +131,7 @@ public class ProcesaTXT implements Runnable {
             // Variables auxiliares
             Correo correo;
             total_correos = correosNuevos.size();
-            String ruta_invalidos=System.getProperty("user.home")+"\\Desktop\\Correos_invalidos_"+dateFormat.format(new Date())+" "+hourFormat.format(new Date())+".txt";
+            String ruta_invalidos=System.getProperty("user.home")+"\\Desktop\\Correos invalidos "+dateFormat.format(new Date())+" "+hourFormat.format(new Date())+".txt";
             BufferedWriter correosInvalidos = new BufferedWriter(new FileWriter(ruta_invalidos));
 
             // SI hay correos en la BD, comparo con los correos nuevos
